@@ -15,7 +15,7 @@ Simple Web API + React + Firebase Auth app for managing haunted hotels🎃🦇�
 
 # Use
 1. run a debug build in `VS2019`
-2. run `npm start` in `MonsterHotel/client` directory
+2. run `npm start` in the `MonsterHotel/client` directory
 3. Time to check in and get haunted😀!
 
 ## Contributing
