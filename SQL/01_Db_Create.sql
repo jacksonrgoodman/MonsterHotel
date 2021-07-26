@@ -26,7 +26,7 @@ CREATE TABLE [UserProfile] (
   [UserTypeId] integer NOT NULL,
   [DateCreated] datetime NOT NULL,
   [IsCheckedIn] BIT NOT NULL DEFAULT 0,
-  [IsActive] BIT NOT NULL DEFAULT 0,
+  [IsActive] BIT NOT NULL DEFAULT 1,
 )
 GO
 
@@ -76,7 +76,7 @@ CREATE TABLE [Stay] (
   [CheckInTime] datetime NOT NULL,
   [CheckOutTime] datetime NOT NULL,
   [IsCheckedIn] BIT NOT NULL DEFAULT 0,
-  [IsActive] BIT NOT NULL DEFAULT 0,
+  [IsActive] BIT NOT NULL DEFAULT 1,
 )
 GO
 

@@ -33,9 +33,9 @@ set identity_insert [Rooms] off
 
 set identity_insert [Stay] on
 insert into [Stay] ([Id], [GuestId], [HandlerId], [RoomId], [CheckInTime], [CheckOutTime], [IsCheckedIn], [IsActive]) 
-VALUES ( 1, 2, 1, 11, '2020-08-06', '', 1, 0),
-( 2, 3, 1, 8, '2020-08-07', '', 1, 0),
-( 3, 4, 1, 6, '2020-08-03', '', 1, 0)
+VALUES ( 1, 2, 1, 11, '2020-08-06', '', 1, 1),
+( 2, 3, 1, 8, '2020-08-07', '', 1, 1),
+( 3, 4, 1, 6, '2020-08-03', '', 1, 1)
 ;
 set identity_insert [Stay] off
 
