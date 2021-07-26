@@ -9,7 +9,22 @@
 ### Capstone Developed by [Jackson Goodman](https://github.com/jacksonrgoodman), For Cohort 47's Back End.
 Simple Web API + React + Firebase Auth app for managing haunted hotels🎃🦇🕸👀
 
-Ctrl+Click For More Info:
+# Installation
+1. `git clone` this repository
+2. run the two .sql files in the `MonsterHotel/SQL` directory, if not created already.
+
+# Use
+1. run a debug build in `VS2019`
+2. run `npm start` in `MonsterHotel/client` directory
+3. Time to check in and get haunted😀!
+
+## Contributing
+[Jackson Goodman](https://github.com/jacksonrgoodman)  
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
+
+## Ctrl+Click For More Info:
 
 [![ERD](https://img.shields.io/badge/ERD-lightgreen?style=for-the-badge&logo=node-red&logoColor=black)](https://dbdiagram.io/d/60fb17e128da596eb54b417d)
 [![FIGMA](https://img.shields.io/badge/Figma-FFFF00?style=for-the-badge&logo=figma&logoColor=black)](https://www.figma.com/file/WSQNR6Unoe9Mt8Oyvpn1sC/Monster-Hotel)
