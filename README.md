@@ -11,7 +11,7 @@ Simple Web API + React + Firebase Auth app for managing haunted hotels🎃🦇�
 
 # Installation
 1. `git clone` this repository
-2. run the two .sql files in the `MonsterHotel/SQL` directory, if not created already.
+2. run the two .sql files in the `MonsterHotel/SQL` directory
 
 # Use
 1. run a debug build in `VS2019`
