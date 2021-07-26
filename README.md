@@ -9,7 +9,7 @@
 ### Capstone Developed by [Jackson Goodman](https://github.com/jacksonrgoodman), For Cohort 47's Back End.
 Simple Web API + React + Firebase Auth app for managing haunted hotels🎃🦇🕸👀
 
-Click For More Info:
+Ctrl+Click For More Info:
 
 [![ERD](https://img.shields.io/badge/ERD-lightgreen?style=for-the-badge&logo=node-red&logoColor=black)](https://dbdiagram.io/d/60fb17e128da596eb54b417d)
 [![FIGMA](https://img.shields.io/badge/Figma-FFFF00?style=for-the-badge&logo=figma&logoColor=black)](https://www.figma.com/file/WSQNR6Unoe9Mt8Oyvpn1sC/Monster-Hotel)
