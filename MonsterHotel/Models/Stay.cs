@@ -13,6 +13,9 @@ namespace MonsterHotel.Models
         public int RoomId { get; set; }
         public DateTime CheckInTime { get; set; }
         public DateTime CheckOutTime { get; set; }
+        public Rooms Room { get; set; }
+        public Handler Handler { get; set; }
+        public Guest Guest { get; set; }
         public bool IsCheckedIn { get; set; }
         public bool IsActive { get; set; }
     }

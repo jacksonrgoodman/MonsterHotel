@@ -25,7 +25,33 @@ namespace MonsterHotel.Controllers
             return Ok(_userProfileRepository.GetAll());
         }
 
-        [HttpGet("{firebaseUserId}")]
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var userProfile = _userProfileRepository.GetById(id);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            return Ok(userProfile);
+        }
+        [HttpGet("CheckedIn")]
+        public IActionResult GetAllCheckedIn()
+        {
+            return Ok(_userProfileRepository.GetAllCheckedIn());
+        }
+        [HttpGet("CheckedOut")]
+        public IActionResult GetAllCheckedOut()
+        {
+            return Ok(_userProfileRepository.GetAllCheckedOut());
+        }
+        [HttpGet("Deactivated")]
+        public IActionResult GetAllDeactivated()
+        {
+            return Ok(_userProfileRepository.GetAllDeactivated());
+        }
+
+        [HttpGet("GetFireBase/{firebaseUserId}")]
         public IActionResult GetByFirebaseUserId(string firebaseUserId)
         {
             var userProfile = _userProfileRepository.GetByFireBaseId(firebaseUserId);
@@ -34,6 +60,43 @@ namespace MonsterHotel.Controllers
                 return NotFound();
             }
             return Ok(userProfile);
+        }
+        [HttpPut("CheckIn/{id}")]
+        public IActionResult CheckIn(int id)
+        {
+            _userProfileRepository.CheckIn(id);
+            return NoContent();
+        }
+        [HttpPut("CheckOut/{id}")]
+        public IActionResult CheckOut(int id)
+        {
+            _userProfileRepository.CheckOut(id);
+            return NoContent();
+        }
+        [HttpDelete("Delete/{id}")]
+        public IActionResult Deactivate(int id)
+        {
+            _userProfileRepository.Deactivate(id);
+            return NoContent();
+        }
+        [HttpPut("Activate/{id}")]
+        public IActionResult Activate(int id)
+        {
+            _userProfileRepository.Activate(id);
+            return NoContent();
+        }
+
+        [HttpPut("MakeAdmin/{id}")]
+        public IActionResult MakeAdmin(int id)
+        {
+            _userProfileRepository.MakeAdmin(id);
+            return NoContent();
+        }
+        [HttpPut("MakeGuest/{id}")]
+        public IActionResult MakeAuthor(int id)
+        {
+            _userProfileRepository.MakeGuest(id);
+            return NoContent();
         }
 
         [HttpGet("DoesUserExist/{firebaseUserId}")]

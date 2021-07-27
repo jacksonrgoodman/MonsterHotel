@@ -6,13 +6,17 @@ namespace MonsterHotel.Repositories
     public interface IUserProfileRepository
     {
         void Activate(int id);
+        void CheckIn(int id);
+        void CheckOut(int id);
         void Add(UserProfile userProfile);
         void Deactivate(int id);
         List<UserProfile> GetAll();
+        List<UserProfile> GetAllCheckedIn();
+        List<UserProfile> GetAllCheckedOut();
         List<UserProfile> GetAllDeactivated();
         UserProfile GetByFireBaseId(string firebaseUserId);
         UserProfile GetById(int id);
         void MakeAdmin(int id);
-        void MakeAuthor(int id);
+        void MakeGuest(int id);
     }
 }
