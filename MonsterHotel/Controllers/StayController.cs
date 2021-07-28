@@ -20,6 +20,10 @@ namespace MonsterHotel.Controllers
         {
             _stayRepository = stayRepository;
         }
+        //public StayController(IUserProfileRepository userProfileRepository)
+        //{
+        //    _userProfileRepository = userProfileRepository;
+        //}
 
         [HttpGet]
         public IActionResult Get()
@@ -40,6 +44,11 @@ namespace MonsterHotel.Controllers
         public IActionResult GetAllDeactivated()
         {
             return Ok(_stayRepository.GetAllDeactivated());
+        }
+        [HttpGet("CurrentStays")]
+        public IActionResult GetAllCheckedIn()
+        {
+            return Ok(_stayRepository.GetAllCheckedIn());
         }
         [HttpDelete("Delete/{id}")]
         public IActionResult Deactivate(int id)
@@ -81,6 +90,21 @@ namespace MonsterHotel.Controllers
             stay.GuestId = currentUser.Id;
             stay.IsActive = true;
             _stayRepository.CheckIn(stay);
+            return CreatedAtAction(nameof(Get), new { id = stay.Id }, stay);
+        }
+        [HttpPut("CheckOut/{id}")]
+        public IActionResult CheckOut(Stay stay)
+        {
+            var currentUser = GetCurrentUserProfile();
+            //if (currentUser.UserType.Name != "guest")
+            //{
+            //    return Unauthorized();
+            //}
+            stay.CheckOutTime = DateTime.Now;
+            //stay.PublishDateTime = DateTime.Now;
+            //stay.GuestId = currentUser.Id;
+            stay.IsActive = false;
+            _stayRepository.CheckOut(stay);
             return CreatedAtAction(nameof(Get), new { id = stay.Id }, stay);
         }
 
