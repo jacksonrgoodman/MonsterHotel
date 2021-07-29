@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import UserProfileCard from "./UserProfileCard";
-import { getAllActiveProfiles } from "../../modules/userProfileManager";
+import { getAllGuests } from "../../modules/userProfileManager";
 
 export default function UserProfileList() {
     const [userProfiles, setUserProfiles] = useState([]);
 
     useEffect(() => {
-        getAllActiveProfiles().then(setUserProfiles);
+        getAllGuests().then(setUserProfiles);
         console.log(userProfiles)
     }, []);
 

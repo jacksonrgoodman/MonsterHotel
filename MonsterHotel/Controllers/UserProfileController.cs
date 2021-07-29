@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using MonsterHotel.Models;
 using MonsterHotel.Repositories;
@@ -35,6 +36,17 @@ namespace MonsterHotel.Controllers
             }
             return Ok(userProfile);
         }
+        [HttpPost]
+        public IActionResult Post(UserProfile userProfile)
+        {
+            userProfile.DateCreated = DateTime.Now;
+            userProfile.UserTypeId = UserType.GUEST_ID;
+            _userProfileRepository.Add(userProfile);
+            return CreatedAtAction(
+                nameof(GetByFirebaseUserId),
+                new { firebaseUserId = userProfile.FireBaseId },
+                userProfile);
+        }
         [HttpGet("CheckedIn")]
         public IActionResult GetAllCheckedIn()
         {
@@ -51,6 +63,26 @@ namespace MonsterHotel.Controllers
             return Ok(_userProfileRepository.GetAllDeactivated());
         }
 
+        [HttpGet("Guests")]
+        public IActionResult GetAllGuests()
+        {
+            return Ok(_userProfileRepository.GetAllGuests());
+        }
+        [HttpGet("GetCurrentUser")]
+        public IActionResult GetCurrentUser()
+        {
+            var currentUserProfile = GetCurrentUserProfile();
+            return Ok(currentUserProfile);
+        }
+        [HttpGet("GetCurrentUserType")]
+        public IActionResult GetCurrentUserType()
+        {
+            var currentUserProfile = GetCurrentUserProfile();
+            var currentUserTypeName = currentUserProfile.UserType.Name;
+            return Ok(currentUserProfile.UserType);
+        }
+
+
         [HttpGet("GetFireBase/{firebaseUserId}")]
         public IActionResult GetByFirebaseUserId(string firebaseUserId)
         {
@@ -61,6 +93,7 @@ namespace MonsterHotel.Controllers
             }
             return Ok(userProfile);
         }
+
         [HttpPut("CheckIn/{id}")]
         public IActionResult CheckIn(int id)
         {
@@ -110,11 +143,19 @@ namespace MonsterHotel.Controllers
             return Ok();
         }
 
-        //private UserProfile GetCurrentUserProfile()
-        //{
-        //    var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        //    return _userProfileRepository.GetByFireBaseId(firebaseUserId);
-        //}
+        private UserProfile GetCurrentUserProfile()
+        {
+            var fireBaseId = User?.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            if (fireBaseId != null)
+            {
+                return _userProfileRepository.GetByFireBaseId(fireBaseId);
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         //[HttpPost]
         //public IActionResult Register(UserProfile userProfile)

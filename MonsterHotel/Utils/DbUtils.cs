@@ -36,6 +36,10 @@ namespace MonsterHotel.Utils
         {
             return reader.GetInt32(reader.GetOrdinal(column));
         }
+        public static bool GetBool(SqlDataReader reader, string column)
+        {
+            return reader.GetBoolean(reader.GetOrdinal(column));
+        }
 
         /// <summary>
         ///  Get a DateTime from a data reader object.

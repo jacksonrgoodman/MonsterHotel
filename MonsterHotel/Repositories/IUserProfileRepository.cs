@@ -11,6 +11,7 @@ namespace MonsterHotel.Repositories
         void Add(UserProfile userProfile);
         void Deactivate(int id);
         List<UserProfile> GetAll();
+        List<UserProfile> GetAllGuests();
         List<UserProfile> GetAllCheckedIn();
         List<UserProfile> GetAllCheckedOut();
         List<UserProfile> GetAllDeactivated();
