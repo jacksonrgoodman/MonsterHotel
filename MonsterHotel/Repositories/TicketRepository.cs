@@ -38,7 +38,7 @@ namespace MonsterHotel.Repositories
                     JOIN TicketType tt ON t.TicketTypeId = tt.Id
                     JOIN TicketStatus ts ON t.TicketStatusId = ts.Id
                     JOIN UserProfile up ON t.UserProfileId = up.Id
-                    WHERE up.IsActive = 0
+                    WHERE up.IsActive = 1
                     ORDER BY t.CreateDateTime
                     ";
 
@@ -50,6 +50,8 @@ namespace MonsterHotel.Repositories
                         tickets.Add(new Ticket()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
+
+                            IsActive = DbUtils.GetBool(reader, "IsActive"),
                             UserProfileId = DbUtils.GetInt(reader, "GuestId"),
                             Guest = new Guest()
                             {

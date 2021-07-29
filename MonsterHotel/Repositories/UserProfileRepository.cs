@@ -20,7 +20,7 @@ namespace MonsterHotel.Repositories
                 {
                     cmd.CommandText = @"
                SELECT up.Id, Up.FireBaseId, up.FirstName, up.LastName, up.DisplayName, 
-                               up.Email, up.DateCreated, up.ImageLocation, up.UserTypeId,
+                               up.Email, up.DateCreated, up.ImageLocation, up.IsActive, up.IsCheckedIn, up.UserTypeId,
                                ut.Name AS UserTypeName
                           FROM UserProfile up
                                LEFT JOIN UserType ut on up.UserTypeId = ut.Id
@@ -43,6 +43,58 @@ namespace MonsterHotel.Repositories
                             Email = DbUtils.GetString(reader, "Email"),
                             DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
                             ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive"),
+                            IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
+                            UserTypeId = DbUtils.GetInt(reader, "UserTypeId"),
+                            UserType = new UserType()
+                            {
+                                Id = DbUtils.GetInt(reader, "UserTypeId"),
+                                Name = DbUtils.GetString(reader, "UserTypeName"),
+                            }
+                        });
+                    }
+
+                    reader.Close();
+
+                    return userProfiles;
+                }
+            }
+        }
+
+        public List<UserProfile> GetAllGuests()
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+               SELECT up.Id, Up.FireBaseId, up.FirstName, up.LastName, up.DisplayName, 
+                               up.Email, up.DateCreated, up.ImageLocation, up.IsActive, up.IsCheckedIn, up.UserTypeId,
+                               ut.Name AS UserTypeName
+                          FROM UserProfile up
+                               LEFT JOIN UserType ut on up.UserTypeId = ut.Id
+                            WHERE up.UserTypeId = 2
+                            ORDER BY up.DisplayName
+            ";
+
+                    var reader = cmd.ExecuteReader();
+
+                    var userProfiles = new List<UserProfile>();
+                    while (reader.Read())
+                    {
+                        userProfiles.Add(new UserProfile()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            FireBaseId = DbUtils.GetString(reader, "FireBaseId"),
+                            FirstName = DbUtils.GetString(reader, "FirstName"),
+                            LastName = DbUtils.GetString(reader, "LastName"),
+                            DisplayName = DbUtils.GetString(reader, "DisplayName"),
+                            Email = DbUtils.GetString(reader, "Email"),
+                            DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
+                            ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive"),
+                            IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
                             UserTypeId = DbUtils.GetInt(reader, "UserTypeId"),
                             UserType = new UserType()
                             {
@@ -68,7 +120,7 @@ namespace MonsterHotel.Repositories
                 {
                     cmd.CommandText = @"
                SELECT up.Id, Up.FireBaseId, up.FirstName, up.LastName, up.DisplayName, 
-                               up.Email, up.DateCreated, up.ImageLocation, up.IsActive, up.UserTypeId,
+                               up.Email, up.DateCreated, up.ImageLocation, up.IsActive, up.IsCheckedIn, up.UserTypeId,
                                ut.Name AS UserTypeName
                           FROM UserProfile up
                                LEFT JOIN UserType ut on up.UserTypeId = ut.Id
@@ -91,6 +143,8 @@ namespace MonsterHotel.Repositories
                             Email = DbUtils.GetString(reader, "Email"),
                             DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
                             ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive"),
+                            IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
                             UserTypeId = DbUtils.GetInt(reader, "UserTypeId"),
                             UserType = new UserType()
                             {
@@ -116,7 +170,7 @@ namespace MonsterHotel.Repositories
                 {
                     cmd.CommandText = @"
                SELECT up.Id, Up.FireBaseId, up.FirstName, up.LastName, up.DisplayName, 
-                               up.Email, up.DateCreated, up.ImageLocation, up.IsActive, up.UserTypeId,
+                               up.Email, up.DateCreated, up.ImageLocation, up.IsActive, up.IsCheckedIn, up.UserTypeId,
                                ut.Name AS UserTypeName
                           FROM UserProfile up
                                LEFT JOIN UserType ut on up.UserTypeId = ut.Id
@@ -139,6 +193,8 @@ namespace MonsterHotel.Repositories
                             Email = DbUtils.GetString(reader, "Email"),
                             DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
                             ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive"),
+                            IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
                             UserTypeId = DbUtils.GetInt(reader, "UserTypeId"),
                             UserType = new UserType()
                             {
@@ -164,7 +220,7 @@ namespace MonsterHotel.Repositories
                 {
                     cmd.CommandText = @"
                SELECT up.Id, Up.FireBaseId, up.FirstName, up.LastName, up.DisplayName, 
-                               up.Email, up.DateCreated, up.ImageLocation, up.IsActive, up.UserTypeId,
+                               up.Email, up.DateCreated, up.ImageLocation, up.IsActive, up.IsCheckedIn, up.UserTypeId,
                                ut.Name AS UserTypeName
                           FROM UserProfile up
                                LEFT JOIN UserType ut on up.UserTypeId = ut.Id
@@ -187,6 +243,8 @@ namespace MonsterHotel.Repositories
                             Email = DbUtils.GetString(reader, "Email"),
                             DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
                             ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive"),
+                            IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
                             UserTypeId = DbUtils.GetInt(reader, "UserTypeId"),
                             UserType = new UserType()
                             {
@@ -212,7 +270,8 @@ namespace MonsterHotel.Repositories
                 {
                     cmd.CommandText = @"
                         SELECT up.Id, Up.FireBaseId, up.FirstName, up.LastName, up.DisplayName, 
-                               up.Email, up.DateCreated, up.ImageLocation, up.UserTypeId,
+                               up.Email, up.DateCreated, up.ImageLocation, up.IsActive, up.IsCheckedIn, up.UserTypeId,
+                               up.IsActive, up.IsCheckedIn,
                                ut.Name AS UserTypeName
                           FROM UserProfile up
                                LEFT JOIN UserType ut on up.UserTypeId = ut.Id
@@ -235,6 +294,8 @@ namespace MonsterHotel.Repositories
                             Email = DbUtils.GetString(reader, "Email"),
                             DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
                             ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive"),
+                            IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
                             UserTypeId = DbUtils.GetInt(reader, "UserTypeId"),
                             UserType = new UserType()
                             {
@@ -258,7 +319,7 @@ namespace MonsterHotel.Repositories
                 {
                     cmd.CommandText = @"
                         SELECT up.Id, Up.FireBaseId, up.FirstName, up.LastName, up.DisplayName, 
-                               up.Email, up.DateCreated, up.ImageLocation, up.UserTypeId,
+                               up.Email, up.DateCreated, up.ImageLocation, up.IsActive, up.IsCheckedIn, up.UserTypeId,
                                ut.Name AS UserTypeName
                           FROM UserProfile up
                                LEFT JOIN UserType ut on up.UserTypeId = ut.Id
@@ -281,6 +342,8 @@ namespace MonsterHotel.Repositories
                             Email = DbUtils.GetString(reader, "Email"),
                             DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
                             ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive"),
+                            IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
                             UserTypeId = DbUtils.GetInt(reader, "UserTypeId"),
                             UserType = new UserType()
                             {
@@ -304,10 +367,10 @@ namespace MonsterHotel.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"INSERT INTO UserProfile (FireBaseId, FirstName, LastName, DisplayName, 
-                                                                 Email, DateCreated, ImageLocation, UserTypeId)
+                                                                 Email, DateCreated, ImageLocation, up.IsActive, up.IsCheckedIn, UserTypeId)
                                         OUTPUT INSERTED.ID
                                         VALUES (@FireBaseId, @FirstName, @LastName, @DisplayName, 
-                                                @Email, @DateCreated, @ImageLocation, @UserTypeId)";
+                                                @Email, @DateCreated, @ImageLocation, @IsActive, @IsCheckedIn, @UserTypeId)";
                     DbUtils.AddParameter(cmd, "@FireBaseId", userProfile.FireBaseId);
                     DbUtils.AddParameter(cmd, "@FirstName", userProfile.FirstName);
                     DbUtils.AddParameter(cmd, "@LastName", userProfile.LastName);
@@ -315,6 +378,8 @@ namespace MonsterHotel.Repositories
                     DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
                     DbUtils.AddParameter(cmd, "@DateCreated", userProfile.DateCreated);
                     DbUtils.AddParameter(cmd, "@ImageLocation", userProfile.ImageLocation);
+                    DbUtils.AddParameter(cmd, "@IsActive", userProfile.IsActive);
+                    DbUtils.AddParameter(cmd, "@IsCheckedIn", userProfile.IsCheckedIn);
                     DbUtils.AddParameter(cmd, "@UserTypeId", userProfile.UserTypeId);
 
                     userProfile.Id = (int)cmd.ExecuteScalar();
