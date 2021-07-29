@@ -32,12 +32,12 @@ export default function Header({ isLoggedIn }) {
     };
     const userIsCheckedIn = () => {
         getCurrentProfile().then((user) => {
-            console.log("NAVBAR CHECK:", user)
-            console.log("NAVBAR CHECK isCheckedIn:", user.isCheckedIn)
+            // console.log("NAVBAR CHECK:", user)
+            // console.log("NAVBAR CHECK isCheckedIn:", user.isCheckedIn)
             if (user.isCheckedIn) {
                 setIsCheckedIn(true);
             } else {
-                userIsCheckedIn();
+                setIsCheckedIn(false);
             }
         });
     };
@@ -48,7 +48,7 @@ export default function Header({ isLoggedIn }) {
             if (user.isActive) {
                 setIsActive(true);
             } else {
-                setIsActive(true);
+                setIsActive(false);
             }
         });
     };
@@ -64,56 +64,84 @@ export default function Header({ isLoggedIn }) {
         <div>
             <Navbar color="dark" dark expand="md">
                 <NavbarBrand tag={RRNavLink} to="/">MonsterHotel</NavbarBrand>
-                {/* <NavbarToggler onClick={toggle} />
-                <Collapse isOpen={isOpen} navbar> */}
-                <Nav navbar>
-                    <NavItem>
-                        <NavLink tag={RRNavLink} to="/about">About</NavLink>
-                    </NavItem>
-                </Nav>
-                <Nav className="mr-auto" navbar>
-                    {isAdmin &&
-                        <>
-                            <NavItem>
-                                <NavLink tag={RRNavLink} to="/guests">Guests</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink tag={RRNavLink} to="/Tickets">Tickets</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink tag={RRNavLink} to="/myStays">My Stays</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink tag={RRNavLink} to="/myTickets">My Tickets</NavLink>
-                            </NavItem>
-                        </>
-                    }
-                    {isLoggedIn &&
-                        <>
-                            <NavItem>
-                                <NavLink tag={RRNavLink} to="/Tickets">Tickets</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink tag={RRNavLink} to="/CheckOut">Check Out</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <a aria-current="page" className="nav-link"
-                                    style={{ cursor: "pointer" }} onClick={logout}>Logout</a>
-                            </NavItem>
-                        </>
-                    }
-                    {!isLoggedIn &&
-                        <>
-                            <NavItem>
-                                <NavLink tag={RRNavLink} to="/login">Login</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink tag={RRNavLink} to="/register">Register</NavLink>
-                            </NavItem>
-                        </>
-                    }
-                </Nav>
-                {/* </Collapse> */}
+                <NavbarToggler onClick={toggle} />
+                <Collapse isOpen={isOpen} navbar>
+                    <Nav navbar>
+                        <NavItem>
+                            <NavLink tag={RRNavLink} to="/about">About</NavLink>
+                        </NavItem>
+                    </Nav>
+                    <Nav className="mr-auto" navbar>
+                        {isLoggedIn && isActive && isAdmin &&
+                            <>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/addStay">Add A Stay</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/guests">Guests</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/Tickets">Tickets</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/myStays">My Stays</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/myTickets">My Tickets</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <a aria-current="page" className="nav-link"
+                                        style={{ cursor: "pointer" }} onClick={logout}>Logout</a>
+                                </NavItem>
+                            </>
+                        }
+                        {isLoggedIn && isActive && isCheckedIn && !isAdmin &&
+                            <>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/Tickets">Tickets</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/CheckOut">Check Out</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <a aria-current="page" className="nav-link"
+                                        style={{ cursor: "pointer" }} onClick={logout}>Logout</a>
+                                </NavItem>
+                            </>
+                        }
+                        {isLoggedIn && isActive && !isCheckedIn && !isAdmin &&
+                            <>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/CheckOut">Check In</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <a aria-current="page" className="nav-link"
+                                        style={{ cursor: "pointer" }} onClick={logout}>Logout</a>
+                                </NavItem>
+                            </>
+                        }
+                        {isLoggedIn && !isActive &&
+                            <>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/login">Remediating Your Account</NavLink>
+                                </NavItem>
+                                {/* <NavItem>
+                                            <NavLink tag={RRNavLink} to="/register">Register</NavLink>
+                                        </NavItem> */}
+                            </>
+                        }
+                        {!isLoggedIn &&
+                            <>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/login">Login</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/register">Register</NavLink>
+                                </NavItem>
+                            </>
+                        }
+                    </Nav>
+                </Collapse>
             </Navbar>
         </div >
     );

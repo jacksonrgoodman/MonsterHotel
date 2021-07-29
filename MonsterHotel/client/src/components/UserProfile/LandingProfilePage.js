@@ -4,30 +4,48 @@ import { getCurrentProfile } from "../../modules/userProfileManager";
 
 export default function UserProfileList({ isLoggedIn }) {
     const [userProfile, setUserProfile] = useState();
-
+    const [isActive, setIsActive] = useState(true);
     const getUser = () => {
         getCurrentProfile().then((user) => {
-            console.log("LandingPage Request:", user)
+            // if (!userProfile == undefined) {
+            setUserProfile(user);
+            // }
+        });
+    };
+
+    const userIsActive = () => {
+        getCurrentProfile().then((user) => {
+            console.log("LandingPage CHECK:", user)
+            console.log("LandingPage CHECK isActive:", user.isActive)
             if (user.isActive) {
-                console.log("LandingPage User displayName: ", user.displayName)
-                setUserProfile(user);
+                setIsActive(true);
             } else {
-                console.log("USER IS NOT ACTIVE: ", user.displayName)
-                getUser();
+                setIsActive(false);
             }
         });
     };
+
     useEffect(() => {
         if (isLoggedIn) {
             // debugger
             getUser();
+            userIsActive();
+        }
+        if (userProfile == undefined) {
+            getUser();
         }
     }, [isLoggedIn]);
-
+    console.log("USESTATE USERPROFILE", userProfile);
+    console.log("USESTATE ISACTIVE", isActive);
     return (
         < section >
-            {/* <h1>Welcome to Monster Hotel, {userProfile.firstName}!</h1> */}
-            {/* <UserProfileCard key={userProfile.id} UserProfile={userProfile} /> */}
+
+            {userProfile && isActive &&
+                <>
+                    <h1>Welcome to Monster Hotel, {userProfile.firstName}!</h1>
+                    <UserProfileCard key={userProfile.id} UserProfile={userProfile} />
+                </>
+            }
         </section >
     );
 }

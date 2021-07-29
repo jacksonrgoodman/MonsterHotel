@@ -7,8 +7,8 @@ export default function UserProfileCard({ UserProfile }) {
         <Card className="m-4">
             <img src={UserProfile.imageLocation} />
             <CardBody>
-                {/* <p><strong>{UserProfile.userType.name} User:</strong>{UserProfile.fullName}</p> */}
-                {/* <p><strong>Display Name:</strong>{UserProfile.displayName}</p> */}
+                <p><strong>{UserProfile.userType.name} User:</strong>{UserProfile.fullName}</p>
+                <p><strong>Display Name:</strong>{UserProfile.displayName}</p>
             </CardBody>
         </Card>
     );
