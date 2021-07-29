@@ -7,7 +7,6 @@ import GuestList from "./UserProfile/GuestList";
 import { getCurrentProfile } from '../modules/userProfileManager';
 
 export default function ApplicationViews({ isLoggedIn }) {
-    console.log(isLoggedIn)
     const [isAdmin, setIsAdmin] = useState(true);
 
     const userIsAdmin = () => {
