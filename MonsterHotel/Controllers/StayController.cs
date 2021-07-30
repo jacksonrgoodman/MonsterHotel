@@ -37,6 +37,26 @@ namespace MonsterHotel.Controllers
             }
             return Ok(stay);
         }
+        [HttpGet("Guest/{id}")]
+        public IActionResult GetByUser(int id)
+        {
+            var stay = _stayRepository.GetByGuestId(id);
+            if (stay == null)
+            {
+                return NotFound();
+            }
+            return Ok(stay);
+        }
+        [HttpGet("Handler/{id}")]
+        public IActionResult GetByAdmin(int id)
+        {
+            var stay = _stayRepository.GetByHandlerId(id);
+            if (stay == null)
+            {
+                return NotFound();
+            }
+            return Ok(stay);
+        }
         [HttpGet("Deactivated")]
         public IActionResult GetAllDeactivated()
         {

@@ -49,6 +49,8 @@ namespace MonsterHotel.Repositories
                         stays.Add(new Stay()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive"),
+                            IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
                             GuestId = DbUtils.GetInt(reader, "GuestId"),
                             Guest = new Guest()
                             {
@@ -59,7 +61,7 @@ namespace MonsterHotel.Repositories
                             Handler = new Handler()
                             {
                                 Id = DbUtils.GetInt(reader, "HandlerId"),
-                                DisplayName = DbUtils.GetString(reader,"Handler")
+                                DisplayName = DbUtils.GetString(reader, "Handler")
                             },
                             RoomId = DbUtils.GetInt(reader, "RoomId"),
                             Room = new Rooms()
@@ -114,6 +116,8 @@ namespace MonsterHotel.Repositories
                         stays.Add(new Stay()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive"),
+                            IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
                             GuestId = DbUtils.GetInt(reader, "GuestId"),
                             Guest = new Guest()
                             {
@@ -180,6 +184,8 @@ namespace MonsterHotel.Repositories
                         stays.Add(new Stay()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive"),
+                            IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
                             GuestId = DbUtils.GetInt(reader, "GuestId"),
                             Guest = new Guest()
                             {
@@ -246,6 +252,8 @@ namespace MonsterHotel.Repositories
                         stay = new Stay()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive"),
+                            IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
                             GuestId = DbUtils.GetInt(reader, "GuestId"),
                             Guest = new Guest()
                             {
@@ -273,6 +281,141 @@ namespace MonsterHotel.Repositories
                 }
             }
         }
+        public Stay GetByGuestId(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT
+                        s.Id,
+                        s.GuestId,
+                        g.DisplayName AS Guest,
+                        s.HandlerId,
+                        h.DisplayName AS Handler,
+                        r.Floor AS FloorNumber,
+                        r.Name AS Room,
+                        s.RoomId,
+                        s.CheckInTime,
+                        s.CheckOutTime,
+                        s.IsCheckedIn,
+                        s.IsActive
+                    FROM Stay s
+                    JOIN UserProfile g ON s.GuestId = g.Id
+                    JOIN UserProfile h ON s.HandlerId = h.Id
+                    JOIN Rooms r ON s.RoomId = r.Id
+                    WHERE s.GuestId = @id AND s.IsCheckedIn = 1
+                    ";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+                    Stay stay = null;
+
+                    var reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        stay = new Stay()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive"),
+                            IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
+                            GuestId = DbUtils.GetInt(reader, "GuestId"),
+                            Guest = new Guest()
+                            {
+                                Id = DbUtils.GetInt(reader, "GuestId"),
+                                DisplayName = DbUtils.GetString(reader, "Guest")
+                            },
+                            HandlerId = DbUtils.GetInt(reader, "HandlerId"),
+                            Handler = new Handler()
+                            {
+                                Id = DbUtils.GetInt(reader, "HandlerId"),
+                                DisplayName = DbUtils.GetString(reader, "Handler")
+                            },
+                            RoomId = DbUtils.GetInt(reader, "RoomId"),
+                            Room = new Rooms()
+                            {
+                                Id = DbUtils.GetInt(reader, "RoomId"),
+                                Floor = DbUtils.GetInt(reader, "FloorNumber"),
+                                Name = DbUtils.GetString(reader, "Room")
+                            }
+                        };
+                    }
+                    reader.Close();
+
+                    return stay;
+                }
+            }
+        }
+        public List<Stay> GetByHandlerId(int id)
+        {
+            using (var conn = Connection)
+            {
+
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    SELECT
+                        s.Id,
+                        s.GuestId,
+                        g.DisplayName AS Guest,
+                        s.HandlerId,
+                        h.DisplayName AS Handler,
+                        r.Floor AS FloorNumber,
+                        r.Name AS Room,
+                        s.RoomId,
+                        s.CheckInTime,
+                        s.CheckOutTime,
+                        s.IsCheckedIn,
+                        s.IsActive
+                    FROM Stay s
+                    JOIN UserProfile g ON s.GuestId = g.Id
+                    JOIN UserProfile h ON s.HandlerId = h.Id
+                    JOIN Rooms r ON s.RoomId = r.Id
+                    WHERE s.HandlerId = @id AND s.IsActive = 1
+                    ";
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+                    var reader = cmd.ExecuteReader();
+
+                    var stays = new List<Stay>();
+                    while (reader.Read())
+                    {
+                        stays.Add(new Stay()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive"),
+                            IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
+                            GuestId = DbUtils.GetInt(reader, "GuestId"),
+                            Guest = new Guest()
+                            {
+                                Id = DbUtils.GetInt(reader, "GuestId"),
+                                DisplayName = DbUtils.GetString(reader, "Guest")
+                            },
+                            HandlerId = DbUtils.GetInt(reader, "HandlerId"),
+                            Handler = new Handler()
+                            {
+                                Id = DbUtils.GetInt(reader, "HandlerId"),
+                                DisplayName = DbUtils.GetString(reader, "Handler")
+                            },
+                            RoomId = DbUtils.GetInt(reader, "RoomId"),
+                            Room = new Rooms()
+                            {
+                                Id = DbUtils.GetInt(reader, "RoomId"),
+                                Floor = DbUtils.GetInt(reader, "FloorNumber"),
+                                Name = DbUtils.GetString(reader, "Room")
+                            }
+                        });
+                    }
+                    reader.Close();
+
+                    return stays;
+                }
+            }
+        }
+        
         public void Activate(int id)
         {
             using (var conn = Connection)

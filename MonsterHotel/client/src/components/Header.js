@@ -14,7 +14,7 @@ import { getCurrentProfile } from '../modules/userProfileManager';
 
 export default function Header({ isLoggedIn }) {
     const [isOpen, setIsOpen] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(true);
+    const [isAdmin, setIsAdmin] = useState(false);
     const [isCheckedIn, setIsCheckedIn] = useState(true);
     const [isActive, setIsActive] = useState(true);
     const toggle = () => setIsOpen(!isOpen);
@@ -23,10 +23,10 @@ export default function Header({ isLoggedIn }) {
         getCurrentProfile().then((user) => {
             console.log("NAVBAR CHECK:", user)
             console.log("NAVBAR CHECK UserType:", user.userType.name)
-            if (user.userType.name === "Admin") {
-                setIsAdmin(true);
+            if (user.userType.name != "Admin") {
+                setIsAdmin(false);
             } else {
-                setIsAdmin(false)
+                setIsAdmin(true)
             }
         });
     };

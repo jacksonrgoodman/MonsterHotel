@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import UserProfileCard from "./UserProfileCard";
+import GenericProfileCard from "./GenericProfileCard";
 import { getAllGuests } from "../../modules/userProfileManager";
 
 export default function GuestList() {
@@ -14,7 +14,7 @@ export default function GuestList() {
             {
                 console.log("ActiveGuests", userProfiles)}
             {userProfiles.map(q =>
-                <UserProfileCard key={q.id} UserProfile={q} />
+                <GenericProfileCard key={q.id} UserProfile={q} />
             )
             }
         </section >

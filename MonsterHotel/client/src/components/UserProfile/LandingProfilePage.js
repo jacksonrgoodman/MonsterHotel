@@ -15,8 +15,8 @@ export default function UserProfileList({ isLoggedIn }) {
 
     const userIsActive = () => {
         getCurrentProfile().then((user) => {
-            console.log("LandingPage CHECK:", user)
-            console.log("LandingPage CHECK isActive:", user.isActive)
+            // console.log("LandingPage CHECK:", user)
+            // console.log("LandingPage CHECK isActive:", user.isActive)
             if (user.isActive) {
                 setIsActive(true);
             } else {
