@@ -1,8 +1,9 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import { getToken } from './authManager'
 
 const baseUrl = '/api/UserProfile';
-export const getToken = () => firebase.auth().currentUser.getIdToken();
+
 
 export const getAllActiveProfiles = () => {
     return getToken().then((token) =>
