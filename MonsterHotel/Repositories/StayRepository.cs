@@ -51,6 +51,8 @@ namespace MonsterHotel.Repositories
                             Id = DbUtils.GetInt(reader, "Id"),
                             IsActive = DbUtils.GetBool(reader, "IsActive"),
                             IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
+                            CheckInTime = DbUtils.GetDateTime(reader, "CheckInTime"),
+                            CheckOutTime = DbUtils.GetDateTime(reader, "CheckOutTime"),
                             GuestId = DbUtils.GetInt(reader, "GuestId"),
                             Guest = new Guest()
                             {
@@ -118,6 +120,8 @@ namespace MonsterHotel.Repositories
                             Id = DbUtils.GetInt(reader, "Id"),
                             IsActive = DbUtils.GetBool(reader, "IsActive"),
                             IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
+                            CheckInTime = DbUtils.GetDateTime(reader, "CheckInTime"),
+                            CheckOutTime = DbUtils.GetDateTime(reader, "CheckOutTime"),
                             GuestId = DbUtils.GetInt(reader, "GuestId"),
                             Guest = new Guest()
                             {
@@ -186,6 +190,8 @@ namespace MonsterHotel.Repositories
                             Id = DbUtils.GetInt(reader, "Id"),
                             IsActive = DbUtils.GetBool(reader, "IsActive"),
                             IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
+                            CheckInTime = DbUtils.GetDateTime(reader, "CheckInTime"),
+                            CheckOutTime = DbUtils.GetDateTime(reader, "CheckOutTime"),
                             GuestId = DbUtils.GetInt(reader, "GuestId"),
                             Guest = new Guest()
                             {
@@ -254,6 +260,8 @@ namespace MonsterHotel.Repositories
                             Id = DbUtils.GetInt(reader, "Id"),
                             IsActive = DbUtils.GetBool(reader, "IsActive"),
                             IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
+                            CheckInTime = DbUtils.GetDateTime(reader, "CheckInTime"),
+                            CheckOutTime = DbUtils.GetDateTime(reader, "CheckOutTime"),
                             GuestId = DbUtils.GetInt(reader, "GuestId"),
                             Guest = new Guest()
                             {
@@ -321,6 +329,8 @@ namespace MonsterHotel.Repositories
                             Id = DbUtils.GetInt(reader, "Id"),
                             IsActive = DbUtils.GetBool(reader, "IsActive"),
                             IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
+                            CheckInTime = DbUtils.GetDateTime(reader, "CheckInTime"),
+                            CheckOutTime = DbUtils.GetDateTime(reader, "CheckOutTime"),
                             GuestId = DbUtils.GetInt(reader, "GuestId"),
                             Guest = new Guest()
                             {
@@ -388,6 +398,8 @@ namespace MonsterHotel.Repositories
                             Id = DbUtils.GetInt(reader, "Id"),
                             IsActive = DbUtils.GetBool(reader, "IsActive"),
                             IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
+                            CheckInTime = DbUtils.GetDateTime(reader, "CheckInTime"),
+                            CheckOutTime = DbUtils.GetDateTime(reader, "CheckOutTime"),
                             GuestId = DbUtils.GetInt(reader, "GuestId"),
                             Guest = new Guest()
                             {

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import UserProfileCard from "./UserProfileCard";
 import { getCurrentProfile } from "../../modules/userProfileManager";
+import { Card, CardBody } from "reactstrap";
 
 export default function UserProfileList({ isLoggedIn }) {
     const [userProfile, setUserProfile] = useState();
-    const [isActive, setIsActive] = useState(true);
+    const [isActive, setIsActive] = useState();
     const getUser = () => {
         getCurrentProfile().then((user) => {
             // if (!userProfile == undefined) {
@@ -27,7 +27,7 @@ export default function UserProfileList({ isLoggedIn }) {
 
     useEffect(() => {
         if (isLoggedIn) {
-            // debugger
+            // // debugger
             getUser();
             userIsActive();
         }
@@ -35,15 +35,28 @@ export default function UserProfileList({ isLoggedIn }) {
             getUser();
         }
     }, [isLoggedIn]);
-    console.log("USESTATE USERPROFILE", userProfile);
-    console.log("USESTATE ISACTIVE", isActive);
+    // console.log("USESTATE USERPROFILE", userProfile);
+    // console.log("USESTATE ISACTIVE", isActive);
     return (
         < section >
 
             {userProfile && isActive &&
                 <>
                     <h1>Welcome to Monster Hotel, {userProfile.firstName}!</h1>
-                    <UserProfileCard key={userProfile.id} UserProfile={userProfile} />
+                    <Card className="m-4">
+                        <div className="displayFlex">
+                            <img className="profilePicture border" src={userProfile.imageLocation} al="Profile" />
+                            <CardBody className="">
+                                <p><strong>{userProfile.userType.name} User: </strong>{userProfile.fullName}</p>
+                                <p><strong>Display Name: </strong>{userProfile.displayName}</p>
+                                {userProfile.isCheckedIn &&
+                                    <>
+                                        <p><strong>Checked In!</strong></p>
+                                    </>
+                                }
+                            </CardBody>
+                        </div>
+                    </Card>
                 </>
             }
         </section >

@@ -98,6 +98,9 @@ export default function Header({ isLoggedIn }) {
                         {isLoggedIn && isActive && isCheckedIn && !isAdmin &&
                             <>
                                 <NavItem>
+                                    <NavLink tag={RRNavLink} to="/Tickets/create">Add A Ticket</NavLink>
+                                </NavItem>
+                                <NavItem>
                                     <NavLink tag={RRNavLink} to="/Tickets">Tickets</NavLink>
                                 </NavItem>
                                 <NavItem>

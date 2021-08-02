@@ -7,9 +7,9 @@ set identity_insert [UserType] off
 
 set identity_insert [Ticket] on
 insert into [Ticket] ([Id], [TicketTypeId],[Title], [Description], [ImageUrl], [CreateDateTime], [UserProfileId], [TicketStatusId], [IsActive]) 
-VALUES ( 1, 1, 'Need Help','I Need a blood bag!', '', '2020-04-12', 2, 1, 0),
- ( 2, 3, 'Sink','There is a leak in my sink!', '', '2020-04-12', 3, 1, 0),
- ( 3, 4, 'Atmosphere Issue','Where is the tunes?', '', '2020-04-12', 3, 1, 0)
+VALUES ( 1, 1, 'Need Help','I Need a blood bag!', '', '2020-04-12', 2, 1, 1),
+ ( 2, 3, 'Sink','There is a leak in my sink!', '', '2020-04-12', 3, 1, 1),
+ ( 3, 4, 'Atmosphere Issue','Where is the tunes?', '', '2020-04-12', 3, 1, 1)
  ;
 set identity_insert [Ticket] off
 
@@ -40,9 +40,9 @@ VALUES ( 1, 2, 1, 11, '2020-08-06', '', 1, 1),
 set identity_insert [Stay] off
 
 set identity_insert [UserProfile] on
-insert into UserProfile (Id, DisplayName, FirstName, LastName, Email, DateCreated, ImageLocation, UserTypeId, FireBaseId, IsCheckedIn, IsActive) values (1, 'Foo', 'Foo', 'Barington', 'foo@bar.com', '2020-04-23', 'https://robohash.org/numquamutut.png?size=150x150&set=set2', 1, '3qmM15UvKRW1p7EoEpphpp8dRLs1', 0, 0);
-insert into UserProfile (Id, DisplayName, FirstName, LastName, Email, DateCreated, ImageLocation, UserTypeId, FireBaseId, IsCheckedIn, IsActive) values (2, 'vlad_impaler', 'Vlad', 'Impaler', 'rvlad_impaler48@vampire.com.brx', '2020-04-23', 'https://robohash.org/numquamutut.png?size=150x150&set=set2', 2, 'qp2yqgdlVJNJPzMoomHRZpUpXnV2', 1, 0);
-insert into UserProfile (Id, DisplayName, FirstName, LastName, Email, DateCreated, ImageLocation, UserTypeId, FireBaseId, IsCheckedIn, IsActive) values (3, 'Post-Modern', 'Frank', 'Stein', 'prometheus@timesonline.co.ukx', '2020-04-20', 'https://robohash.org/nisiautemet.png?size=150x150&set=set2', 2, 'wzpGclgNgaUjmBuZdnhoYpYt5yb2', 1, 0);
-insert into UserProfile (Id, DisplayName, FirstName, LastName, Email, DateCreated, ImageLocation, UserTypeId, FireBaseId, IsCheckedIn, IsActive) values (4, 'cairoCruise', 'Cleo', 'Patra', 'cairocruise2@ow.lyx', '2020-01-13', 'https://robohash.org/molestiaemagnamet.png?size=150x150&set=set2', 2, 'SnJxLe4IFjQVxpn3q4llLGOnk572', 1, 0);
-insert into UserProfile (Id, DisplayName, FirstName, LastName, Email, DateCreated, ImageLocation, UserTypeId, FireBaseId, IsCheckedIn, IsActive) values (5, '_webby', 'Webby', 'Spyder', 'web@monster.hotel.brx', '2020-04-23', 'https://robohash.org/numquamutut.png?size=150x150&set=set2', 1, 'NklbCZTB0vXGeL1hIZFVKZsurHj2', 0, 0);
+insert into UserProfile (Id, DisplayName, FirstName, LastName, Email, DateCreated, ImageLocation, UserTypeId, FireBaseId, IsCheckedIn, IsActive) values (1, 'Foo', 'Foo', 'Barington', 'foo@bar.com', '2020-04-23', 'https://robohash.org/numquamutut.png?size=150x150&set=set2', 1, '3qmM15UvKRW1p7EoEpphpp8dRLs1', 0, 1);
+insert into UserProfile (Id, DisplayName, FirstName, LastName, Email, DateCreated, ImageLocation, UserTypeId, FireBaseId, IsCheckedIn, IsActive) values (2, 'vlad_impaler', 'Vlad', 'Impaler', 'rvlad_impaler48@vampire.com.brx', '2020-04-23', 'https://robohash.org/numquamutut.png?size=150x150&set=set2', 2, 'qp2yqgdlVJNJPzMoomHRZpUpXnV2', 1, 1);
+insert into UserProfile (Id, DisplayName, FirstName, LastName, Email, DateCreated, ImageLocation, UserTypeId, FireBaseId, IsCheckedIn, IsActive) values (3, 'Post-Modern', 'Frank', 'Stein', 'prometheus@timesonline.co.ukx', '2020-04-20', 'https://robohash.org/nisiautemet.png?size=150x150&set=set2', 2, 'wzpGclgNgaUjmBuZdnhoYpYt5yb2', 1, 1);
+insert into UserProfile (Id, DisplayName, FirstName, LastName, Email, DateCreated, ImageLocation, UserTypeId, FireBaseId, IsCheckedIn, IsActive) values (4, 'cairoCruise', 'Cleo', 'Patra', 'cairocruise2@ow.lyx', '2020-01-13', 'https://robohash.org/molestiaemagnamet.png?size=150x150&set=set2', 2, 'SnJxLe4IFjQVxpn3q4llLGOnk572', 1, 1);
+insert into UserProfile (Id, DisplayName, FirstName, LastName, Email, DateCreated, ImageLocation, UserTypeId, FireBaseId, IsCheckedIn, IsActive) values (5, '_webby', 'Webby', 'Spyder', 'web@monster.hotel.brx', '2020-04-23', 'https://robohash.org/numquamutut.png?size=150x150&set=set2', 1, 'NklbCZTB0vXGeL1hIZFVKZsurHj2', 0, 1);
 set identity_insert [UserProfile] off
