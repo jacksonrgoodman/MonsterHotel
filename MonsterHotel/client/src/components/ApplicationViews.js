@@ -20,9 +20,19 @@ export default function ApplicationViews({ isLoggedIn }) {
     const [isAdmin, setIsAdmin] = useState(true);
     const [isSuperAdmin, setIsSuperAdmin] = useState(true);
 
+    const currentUserId = () => {
+        getCurrentProfile().then((user) => {
+            // console.log(user.id)
+            if (user.userType.name === "Guest") {
+                setIsGuest(true);
+            } else {
+                setIsGuest(false)
+            }
+        });
+    };
     const userIsGuest = () => {
         getCurrentProfile().then((user) => {
-            console.log(user.userType.name)
+            // console.log(user.userType.name)
             if (user.userType.name === "Guest") {
                 setIsGuest(true);
             } else {
@@ -32,7 +42,7 @@ export default function ApplicationViews({ isLoggedIn }) {
     };
     const userIsAdmin = () => {
         getCurrentProfile().then((user) => {
-            console.log(user.userType.name)
+            // console.log(user.userType.name)
             if (user.userType.name === "Admin") {
                 setIsAdmin(true);
             } else {

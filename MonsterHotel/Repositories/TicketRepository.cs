@@ -220,6 +220,75 @@ namespace MonsterHotel.Repositories
                 }
             }
         }
+        public Ticket GetById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT 
+	                    t.Id,
+	                    t.TicketTypeId,
+	                    tt.Name AS TicketType,
+	                    t.Title,
+	                    t.Description,
+	                    t.ImageUrl,
+	                    t.CreateDateTime,
+	                    t.UserProfileId AS GuestId,
+	                    up.DisplayName AS Guest,
+	                    t.TicketStatusId,
+	                    ts.Name AS TicketStatus,
+	                    t.IsActive
+                    FROM Ticket t
+                    JOIN TicketType tt ON t.TicketTypeId = tt.Id
+                    JOIN TicketStatus ts ON t.TicketStatusId = ts.Id
+                    JOIN UserProfile up ON t.UserProfileId = up.Id
+                    WHERE t.Id = @id
+                    ";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+                    Ticket ticket = null;
+
+                    var reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        ticket = new Ticket()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            Title = DbUtils.GetString(reader, "Title"),
+                            Description = DbUtils.GetString(reader, "Description"),
+                            ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
+                            CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive"),
+                            UserProfileId = DbUtils.GetInt(reader, "GuestId"),
+                            Guest = new Guest()
+                            {
+                                Id = DbUtils.GetInt(reader, "GuestId"),
+                                DisplayName = DbUtils.GetString(reader, "Guest")
+                            },
+                            TicketTypeId = DbUtils.GetInt(reader, "TicketTypeId"),
+                            TicketType = new TicketType()
+                            {
+                                Id = DbUtils.GetInt(reader, "TicketTypeId"),
+                                Name = DbUtils.GetString(reader, "TicketType")
+                            },
+                            TicketStatusId = DbUtils.GetInt(reader, "TicketStatusId"),
+                            TicketStatus = new TicketStatus()
+                            {
+                                Id = DbUtils.GetInt(reader, "TicketStatusId"),
+                                Name = DbUtils.GetString(reader, "TicketStatus")
+                            }
+                        };
+                    }
+                    reader.Close();
+
+                    return ticket;
+                }
+            }
+        }
         public void Add(Ticket ticket)
         {
             using (var conn = Connection)

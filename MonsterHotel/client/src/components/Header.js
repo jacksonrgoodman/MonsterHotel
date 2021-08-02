@@ -21,9 +21,9 @@ export default function Header({ isLoggedIn }) {
 
     const userIsAdmin = () => {
         getCurrentProfile().then((user) => {
-            console.log("NAVBAR CHECK:", user)
-            console.log("NAVBAR CHECK UserType:", user.userType.name)
-            if (user.userType.name != "Admin") {
+            // console.log("NAVBAR CHECK:", user)
+            // console.log("NAVBAR CHECK UserType:", user.userType.name)
+            if (user.userType.name !== "Admin") {
                 setIsAdmin(false);
             } else {
                 setIsAdmin(true)
@@ -43,8 +43,8 @@ export default function Header({ isLoggedIn }) {
     };
     const userIsActive = () => {
         getCurrentProfile().then((user) => {
-            console.log("NAVBAR CHECK:", user)
-            console.log("NAVBAR CHECK isActive:", user.isActive)
+            // console.log("NAVBAR CHECK:", user)
+            // console.log("NAVBAR CHECK isActive:", user.isActive)
             if (user.isActive) {
                 setIsActive(true);
             } else {

@@ -39,6 +39,16 @@ namespace MonsterHotel.Controllers
         {
             return Ok(_ticketRepository.GetAllDeactivated());
         }
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var stay = _ticketRepository.GetById(id);
+            if (stay == null)
+            {
+                return NotFound();
+            }
+            return Ok(stay);
+        }
         [HttpPut("Activate/{id}")]
         public IActionResult Activate(int id)
         {
@@ -71,9 +81,10 @@ namespace MonsterHotel.Controllers
             {
                 return Unauthorized();
             }
-            
+
             ticket.CreateDateTime = DateTime.Now;
             ticket.UserProfileId = currentUser.Id;
+            ticket.TicketStatusId = 1;
             ticket.IsActive = true;
             _ticketRepository.Add(ticket);
             return CreatedAtAction(nameof(Get), new { id = ticket.Id }, ticket);
@@ -86,8 +97,16 @@ namespace MonsterHotel.Controllers
         }
         private UserProfile GetCurrentUserProfile()
         {
-            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return _userProfileRepository.GetByFireBaseId(firebaseUserId);
+            var firebaseUserId = User?.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            if (firebaseUserId != null)
+            {
+                return _userProfileRepository.GetByFireBaseId(firebaseUserId);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ namespace MonsterHotel.Repositories
         void Close(int id);
         void Open(int id);
         void Deactivate(int id);
+        Ticket GetById(int id);
         List<Ticket> GetAll();
         List<Ticket> GetAllIssueTickets();
         List<Ticket> GetAllDeactivated();

@@ -18,7 +18,6 @@ namespace MonsterHotel.Models
         public TicketType TicketType { get; set; }
         public TicketStatus TicketStatus { get; set; }
         public Guest Guest { get; set; }
-        public UserProfile UserProfile { get; set; }
         public bool IsActive { get; set; }
         
     }
