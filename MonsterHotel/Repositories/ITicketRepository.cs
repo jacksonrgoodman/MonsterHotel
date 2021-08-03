@@ -14,6 +14,8 @@ namespace MonsterHotel.Repositories
         List<Ticket> GetAll();
         List<Ticket> GetAllIssueTickets();
         List<Ticket> GetAllDeactivated();
+        List<Ticket> GetAllActiveByUserId(int id);
+        List<Ticket> GetAllDeactivatedByUserId(int id);
         void IssueTicket(int id);
     }
 }

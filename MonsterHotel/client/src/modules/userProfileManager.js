@@ -1,4 +1,3 @@
-
 import "firebase/auth";
 import { getToken } from './authManager'
 
@@ -42,6 +41,30 @@ export const getCurrentProfile = () => {
         }).then((res) => res.json())
     )
 };
+export const CheckInUser = (id) => {
+    return getToken().then((token) =>
+        fetch(`${baseUrl}/CheckIn/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        })
+        //.then((res) => res.json())
+    );
+}
+export const CheckOutUser = (id) => {
+    return getToken().then((token) =>
+        fetch(`${baseUrl}/CheckOut/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        })
+        //.then((res) => res.json())
+    );
+}
 export const getCurrentUserType = () => {
     return getToken().then((token) =>
         fetch(`${baseUrl}/GetCurrentUserType`, {

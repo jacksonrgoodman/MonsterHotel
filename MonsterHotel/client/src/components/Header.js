@@ -32,8 +32,8 @@ export default function Header({ isLoggedIn }) {
     };
     const userIsCheckedIn = () => {
         getCurrentProfile().then((user) => {
-            // console.log("NAVBAR CHECK:", user)
-            // console.log("NAVBAR CHECK isCheckedIn:", user.isCheckedIn)
+            console.log("NAVBAR CHECK:", user)
+            console.log("NAVBAR CHECK isCheckedIn:", user.isCheckedIn)
             if (user.isCheckedIn) {
                 setIsCheckedIn(true);
             } else {
@@ -75,7 +75,7 @@ export default function Header({ isLoggedIn }) {
                         {isLoggedIn && isActive && isAdmin &&
                             <>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/addStay">Add A Stay</NavLink>
+                                    <NavLink tag={RRNavLink} to="/Stays/Create">Add A Stay</NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to="/guests">Guests</NavLink>
@@ -115,7 +115,7 @@ export default function Header({ isLoggedIn }) {
                         {isLoggedIn && isActive && !isCheckedIn && !isAdmin &&
                             <>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/CheckOut">Check In</NavLink>
+                                    <NavLink tag={RRNavLink} to="/CheckIn">Check In</NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <a aria-current="page" className="nav-link"

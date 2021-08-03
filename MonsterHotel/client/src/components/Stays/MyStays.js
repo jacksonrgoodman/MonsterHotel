@@ -19,7 +19,7 @@ export default function MyStays({ isLoggedIn }) {
         });
     };
     const getStays = (id) => {
-        debugger
+
         getStaysByHandlerId(id).then((stays) =>
             setMyStays(stays));
 

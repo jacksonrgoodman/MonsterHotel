@@ -7,27 +7,37 @@ using System.Threading.Tasks;
 using MonsterHotel.Repositories;
 using MonsterHotel.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MonsterHotel.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TicketController : ControllerBase
     {
         private readonly ITicketRepository _ticketRepository;
         private readonly IUserProfileRepository _userProfileRepository;
-        public TicketController(ITicketRepository ticketRepository)
+        public TicketController(ITicketRepository ticketRepository, IUserProfileRepository userProfileRepository)
         {
             _ticketRepository = ticketRepository;
+            _userProfileRepository = userProfileRepository;
         }
-        //public TicketController(IUserProfileRepository userProfileRepository)
-        //{
-        //    _userProfileRepository = userProfileRepository;
-        //}
+        
         [HttpGet]
         public IActionResult Get()
         {
             return Ok(_ticketRepository.GetAll());
+        }
+        [HttpGet("AllActiveByUserId/{id}")]
+        public IActionResult GetAllActiveByUserId(int id)
+        {
+            return Ok(_ticketRepository.GetAllActiveByUserId(id));
+        }
+        [HttpGet("AllDeactivatedByUserId/{id}")]
+        public IActionResult GetAllDeactivatedByUserId(int id)
+        {
+            return Ok(_ticketRepository.GetAllDeactivatedByUserId(id));
         }
         [HttpGet("Issues")]
         public IActionResult GetAllIssueTickets()
@@ -77,10 +87,10 @@ namespace MonsterHotel.Controllers
         public IActionResult Add(Ticket ticket)
         {
             var currentUser = GetCurrentUserProfile();
-            if (currentUser.UserType.Name != "guest")
-            {
-                return Unauthorized();
-            }
+            //if (currentUser.UserType.Name != "guest")
+            //{
+            //    return Unauthorized();
+            //}
 
             ticket.CreateDateTime = DateTime.Now;
             ticket.UserProfileId = currentUser.Id;

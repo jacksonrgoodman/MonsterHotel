@@ -219,6 +219,74 @@ namespace MonsterHotel.Repositories
                 }
             }
         }
+        public List<Stay> GetAllCheckedOut()
+        {
+            using (var conn = Connection)
+            {
+
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    SELECT
+                        s.Id,
+                        s.GuestId,
+                        g.DisplayName AS Guest,
+                        s.HandlerId,
+                        h.DisplayName AS Handler,
+                        r.Floor AS FloorNumber,
+                        r.Name AS Room,
+                        s.RoomId,
+                        s.CheckInTime,
+                        s.CheckOutTime,
+                        s.IsCheckedIn,
+                        s.IsActive
+                    FROM Stay s
+                    JOIN UserProfile g ON s.GuestId = g.Id
+                    JOIN UserProfile h ON s.HandlerId = h.Id
+                    JOIN Rooms r ON s.RoomId = r.Id
+                    WHERE s.IsCheckedIn = 0
+                    ";
+
+                    var reader = cmd.ExecuteReader();
+
+                    var stays = new List<Stay>();
+                    while (reader.Read())
+                    {
+                        stays.Add(new Stay()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive"),
+                            IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
+                            CheckInTime = DbUtils.GetDateTime(reader, "CheckInTime"),
+                            CheckOutTime = DbUtils.GetDateTime(reader, "CheckOutTime"),
+                            GuestId = DbUtils.GetInt(reader, "GuestId"),
+                            Guest = new Guest()
+                            {
+                                Id = DbUtils.GetInt(reader, "GuestId"),
+                                DisplayName = DbUtils.GetString(reader, "Guest")
+                            },
+                            HandlerId = DbUtils.GetInt(reader, "HandlerId"),
+                            Handler = new Handler()
+                            {
+                                Id = DbUtils.GetInt(reader, "HandlerId"),
+                                DisplayName = DbUtils.GetString(reader, "Handler")
+                            },
+                            RoomId = DbUtils.GetInt(reader, "RoomId"),
+                            Room = new Rooms()
+                            {
+                                Id = DbUtils.GetInt(reader, "RoomId"),
+                                Floor = DbUtils.GetInt(reader, "FloorNumber"),
+                                Name = DbUtils.GetString(reader, "Room")
+                            }
+                        });
+                    }
+                    reader.Close();
+
+                    return stays;
+                }
+            }
+        }
 
         public Stay GetById(int id)
         {
@@ -246,6 +314,75 @@ namespace MonsterHotel.Repositories
                     JOIN UserProfile h ON s.HandlerId = h.Id
                     JOIN Rooms r ON s.RoomId = r.Id
                     WHERE s.Id = @id
+                    ";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+                    Stay stay = null;
+
+                    var reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        stay = new Stay()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive"),
+                            IsCheckedIn = DbUtils.GetBool(reader, "IsCheckedIn"),
+                            CheckInTime = DbUtils.GetDateTime(reader, "CheckInTime"),
+                            CheckOutTime = DbUtils.GetDateTime(reader, "CheckOutTime"),
+                            GuestId = DbUtils.GetInt(reader, "GuestId"),
+                            Guest = new Guest()
+                            {
+                                Id = DbUtils.GetInt(reader, "GuestId"),
+                                DisplayName = DbUtils.GetString(reader, "Guest")
+                            },
+                            HandlerId = DbUtils.GetInt(reader, "HandlerId"),
+                            Handler = new Handler()
+                            {
+                                Id = DbUtils.GetInt(reader, "HandlerId"),
+                                DisplayName = DbUtils.GetString(reader, "Handler")
+                            },
+                            RoomId = DbUtils.GetInt(reader, "RoomId"),
+                            Room = new Rooms()
+                            {
+                                Id = DbUtils.GetInt(reader, "RoomId"),
+                                Floor = DbUtils.GetInt(reader, "FloorNumber"),
+                                Name = DbUtils.GetString(reader, "Room")
+                            }
+                        };
+                    }
+                    reader.Close();
+
+                    return stay;
+                }
+            }
+        }
+        public Stay GetByRoomId(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT
+                        s.Id,
+                        s.GuestId,
+                        g.DisplayName AS Guest,
+                        s.HandlerId,
+                        h.DisplayName AS Handler,
+                        r.Floor AS FloorNumber,
+                        r.Name AS Room,
+                        s.RoomId,
+                        s.CheckInTime,
+                        s.CheckOutTime,
+                        s.IsCheckedIn,
+                        s.IsActive
+                    FROM Stay s
+                    JOIN UserProfile g ON s.GuestId = g.Id
+                    JOIN UserProfile h ON s.HandlerId = h.Id
+                    JOIN Rooms r ON s.RoomId = r.Id
+                    WHERE s.RoomId = @id AND s.IsCheckedIn = 1
                     ";
 
                     DbUtils.AddParameter(cmd, "@id", id);
@@ -471,12 +608,11 @@ namespace MonsterHotel.Repositories
                                                     CheckInTime,
                                                     CheckOutTime,
                                                     IsCheckedIn, 
-                                                    IsActive,
-                                                    IsApproved)
+                                                    IsActive)
                                                     OUTPUT INSERTED.ID
                                                     VALUES(@guestId, @handlerId, 
                                                             @roomId, @checkInTime, @checkOutTime,
-                                                            @isCheckedIn, @isActive 
+                                                            @isCheckedIn, @isActive) 
                                                             ;";
                     DbUtils.AddParameter(cmd, "@guestId", stay.GuestId);
                     DbUtils.AddParameter(cmd, "@handlerId", stay.HandlerId);
@@ -491,33 +627,31 @@ namespace MonsterHotel.Repositories
                 }
             }
         }
-        public void CheckIn(Stay stay)
+        public void CheckIn(int id)
         {
             using (var conn = Connection)
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"UPDATE Stay SET IsCheckedIn=@IsCheckedIn, CheckInTime=@CheckInTime WHERE Id=@Id";
+                    cmd.CommandText = @"UPDATE Stay SET IsCheckedIn=@IsCheckedIn WHERE Id=@Id";
                     DbUtils.AddParameter(cmd, "@IsCheckedIn", 1);
-                    DbUtils.AddParameter(cmd, "@CheckInTime", stay.CheckInTime);
-                    cmd.Parameters.AddWithValue("@Id", stay.Id);
+                    cmd.Parameters.AddWithValue("@Id", id);
                     cmd.ExecuteNonQuery();
                 }
             }
         }
 
-        public void CheckOut(Stay stay)
+        public void CheckOut(int id)
         {
             using (var conn = Connection)
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"UPDATE Stay SET IsCheckedIn=@IsCheckedIn, CheckInTime=@CheckInTime WHERE Id=@Id";
+                    cmd.CommandText = @"UPDATE Stay SET IsCheckedIn=@IsCheckedIn WHERE Id=@Id";
                     DbUtils.AddParameter(cmd, "@IsCheckedIn", 0);
-                    DbUtils.AddParameter(cmd, "@CheckOutTime", stay.CheckOutTime);
-                    cmd.Parameters.AddWithValue("@Id", stay.Id);
+                    cmd.Parameters.AddWithValue("@Id", id);
                     cmd.ExecuteNonQuery();
                 }
             }

@@ -7,12 +7,11 @@ import { getCurrentProfile } from '../../modules/userProfileManager';
 const TicketForm = () => {
     const [user, setUser] = useState([]);
     const [ticket, setTicket] = useState({
-        tickeTypeId: "",
+        ticketTypeId: "",
         title: "",
         description: "",
-        imagUrl: "",
-        CreateDateTime: "",
-        userId: user.id,
+        imageUrl: "",
+        userProfileId: user.id,
         ticketStatusId: 1,
         isActive: true
     });
@@ -24,6 +23,7 @@ const TicketForm = () => {
         getCurrentProfile().then((user) => {
             setUser(user)
             console.log("TESTTESTTEST", user)
+
         });
     };
 
@@ -67,7 +67,8 @@ const TicketForm = () => {
         if (ticketTypeSelect === '') {
             alert("Please select a Ticket Category")
         } else {
-            addTicket(newTicket).then(() => history.push('/myTickets'))
+
+            addTicket(newTicket).then(() => history.push('/Tickets'))
         }
     }
 

@@ -28,6 +28,7 @@ namespace MonsterHotel
             services.AddTransient<ITicketRepository, TicketRepository>();
             services.AddTransient<ITicketTypeRepository, TicketTypeRepository>();
             services.AddTransient<ITicketStatusRepository, TicketStatusRepository>();
+            services.AddTransient<IRoomRepository, RoomRepository>();
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
             var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
             services
@@ -85,8 +86,9 @@ namespace MonsterHotel
 
             app.UseRouting();
 
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {

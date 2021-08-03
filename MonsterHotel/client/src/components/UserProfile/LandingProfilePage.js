@@ -27,7 +27,7 @@ export default function UserProfileList({ isLoggedIn }) {
 
     useEffect(() => {
         if (isLoggedIn) {
-            // // debugger
+
             getUser();
             userIsActive();
         }

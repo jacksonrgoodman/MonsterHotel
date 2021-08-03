@@ -7,7 +7,7 @@ export default function UserProfileCard({ Ticket }) {
     console.log("Ticket", Ticket)
     const history = useHistory()
     const handleCloseTicket = (event) => {
-        //debugger
+
         if (window.confirm("Are you sure you want to close this ticket?")) {
             event.preventDefault()
             CloseTicket(Ticket.id)
@@ -22,7 +22,7 @@ export default function UserProfileCard({ Ticket }) {
 
     }
     const handleIssueTicket = (event) => {
-        //debugger
+
         if (window.confirm("Are you sure you want to upgrade this ticket to Issue Status?")) {
             event.preventDefault()
             IssueTicket(Ticket.id)
@@ -34,7 +34,7 @@ export default function UserProfileCard({ Ticket }) {
 
     }
     const handleOpenTicket = (event) => {
-        //debugger
+
 
         event.preventDefault()
         OpenTicket(Ticket.id)

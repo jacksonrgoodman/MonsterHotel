@@ -6,16 +6,19 @@ import LandingProfilePage from "./UserProfile/LandingProfilePage";
 import About from "./About";
 import MyStays from "./Stays/MyStays";
 import StayForm from "./Stays/StayForm";
-import StayEdit from "./Stays/StayEdit";
+import StayCheckOut from "./Stays/StayCheckOut";
+import StayCheckIn from "./Stays/StayCheckIn";
 import MyTickets from "./Tickets/MyTickets";
 import DeactivatedTickets from "./Tickets/DeactivatedTickets";
 import IssueTickets from "./Tickets/IssueTickets";
 import TicketForm from "./Tickets/TicketForm";
+import MyTicketsGuestView from "./Tickets/MyTicketsGuestView";
 import TicketEdit from "./Tickets/TicketEdit";
 import GuestList from "./UserProfile/GuestList";
 import { getCurrentProfile } from '../modules/userProfileManager';
 
 export default function ApplicationViews({ isLoggedIn }) {
+    const [isCheckedIn, setIsCheckedIn] = useState(true);
     const [isGuest, setIsGuest] = useState(true);
     const [isAdmin, setIsAdmin] = useState(true);
     const [isSuperAdmin, setIsSuperAdmin] = useState(true);
@@ -27,6 +30,16 @@ export default function ApplicationViews({ isLoggedIn }) {
                 setIsGuest(true);
             } else {
                 setIsGuest(false)
+            }
+        });
+    };
+    const userIsCheckedIn = () => {
+        getCurrentProfile().then((user) => {
+            console.log("IS CHECKED IN", user.isCheckedIn)
+            if (user.userType.name === "Guest") {
+                setIsCheckedIn(true);
+            } else {
+                setIsCheckedIn(false)
             }
         });
     };
@@ -64,6 +77,7 @@ export default function ApplicationViews({ isLoggedIn }) {
     };
     useEffect(() => {
         if (isLoggedIn) {
+            userIsCheckedIn();
             userIsGuest();
             userIsAdmin();
         }
@@ -97,6 +111,31 @@ export default function ApplicationViews({ isLoggedIn }) {
                         : <Redirect to="/about" />
                     }
                 </Route>
+                {/* <Route path="/Stays/edit" >
+                    {isLoggedIn && isAdmin ?
+                        <StayEdit />
+                        : <Redirect to="/about" />
+                    }
+                </Route> */}
+                <Route path="/Tickets" exact>
+                    {isLoggedIn && !isAdmin ?
+                        <MyTicketsGuestView />
+                        :
+                        <Redirect to="/about" />
+                    }
+                </Route>
+                <Route path="/Tickets/edit/:id" >
+                    {isLoggedIn && isAdmin ?
+                        <TicketForm />
+                        : <Redirect to="/about" />
+                    }
+                </Route>
+                <Route path="/Stays/create" >
+                    {isLoggedIn && isAdmin ?
+                        <StayForm />
+                        : <Redirect to="/about" />
+                    }
+                </Route>
                 <Route path="/Tickets/create" >
                     {isLoggedIn && isGuest ?
                         <TicketForm />
@@ -118,6 +157,18 @@ export default function ApplicationViews({ isLoggedIn }) {
                 <Route path="/Tickets/Issues">
                     {isLoggedIn && isAdmin ?
                         <IssueTickets isLoggedIn={isLoggedIn} />
+                        : <Redirect to="/about" />
+                    }
+                </Route>
+                <Route path="/Checkout" >
+                    {isLoggedIn && isCheckedIn ?
+                        <StayCheckOut />
+                        : <Redirect to="/about" />
+                    }
+                </Route>
+                <Route path="/CheckIn" >
+                    {isLoggedIn && isCheckedIn ?
+                        <StayCheckIn />
                         : <Redirect to="/about" />
                     }
                 </Route>

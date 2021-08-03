@@ -10,18 +10,18 @@ namespace MonsterHotel.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TicketTypeController : ControllerBase
+    public class RoomController : ControllerBase
     {
-        private readonly ITicketTypeRepository _ticketTypeRepository;
-        public TicketTypeController(ITicketTypeRepository ticketTypeRepository)
+        private readonly IRoomRepository _roomRepository;
+        public RoomController(IRoomRepository roomRepository)
         {
-            _ticketTypeRepository = ticketTypeRepository;
+            _roomRepository = roomRepository;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_ticketTypeRepository.GetAll());
+            return Ok(_roomRepository.GetAll());
         }
     }
 }

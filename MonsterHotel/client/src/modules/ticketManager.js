@@ -55,6 +55,24 @@ export const ActivateTicket = (id) => {
         //.then((res) => res.json())
     );
 }
+
+export const getTicketsById = (id) => {
+    return getToken().then((token) => {
+        return fetch(`${baseUrl}/AllActiveByUserId/${id}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(res => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                throw new Error("Something went wrong :(")
+            }
+        })
+    })
+};
+
 export const OpenTicket = (id) => {
     return getToken().then((token) =>
         fetch(`${baseUrl}/Open/${id}`, {
@@ -102,4 +120,16 @@ export const DeactivateTicket = (id) => {
         })
         //.then((res) => res.json())
     );
+}
+export const editTicket = (ticket) => {
+    return getToken().then((token) => {
+        return fetch(`${baseUrl}/${ticket.id}`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(ticket)
+        })
+    })
 }

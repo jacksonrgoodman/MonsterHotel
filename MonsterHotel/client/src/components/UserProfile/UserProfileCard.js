@@ -25,7 +25,7 @@ export default function UserProfileCard({ UserProfile }) {
         });
     }
     useEffect(() => {
-        // debugger
+
         console.log(UserProfile)
         userIsCheckedIn();
 
