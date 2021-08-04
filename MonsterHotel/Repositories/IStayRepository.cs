@@ -7,10 +7,11 @@ namespace MonsterHotel.Repositories
     {
         List<Stay> GetAll();
         Stay GetById(int id);
+        Stay GetByRoomId(int id);
         Stay GetByGuestId(int id);
         void Add(Stay stay);
-        void CheckIn(Stay stay);
-        void CheckOut(Stay stay);
+        void CheckIn(int id);
+        void CheckOut(int id);
         void Activate(int id);
         void Deactivate(int id);
         List<Stay> GetAllDeactivated();

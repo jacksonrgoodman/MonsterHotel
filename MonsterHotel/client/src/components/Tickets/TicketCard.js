@@ -1,19 +1,21 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router";
-import { Card, CardBody, Button } from "reactstrap";
+import { Card, CardBody } from "reactstrap";
 import { CloseTicket, OpenTicket, IssueTicket, DeactivateTicket, ActivateTicket } from "../../modules/ticketManager";
 
-export default function UserProfileCard({ Ticket }) {
+export default function UserProfileCard({ Ticket, closeTicket, setCloseTicket }) {
     console.log("Ticket", Ticket)
     const history = useHistory()
     const handleCloseTicket = (event) => {
-        //debugger
+
         if (window.confirm("Are you sure you want to close this ticket?")) {
             event.preventDefault()
             CloseTicket(Ticket.id)
                 .then(() =>
-                    DeactivateTicket(Ticket.id).then(() =>
+                    DeactivateTicket(Ticket.id).then(() => {
+                        setCloseTicket(!closeTicket)
                         history.push("/myTickets")
+                    }
                     )
                 )
         } else {
@@ -22,11 +24,14 @@ export default function UserProfileCard({ Ticket }) {
 
     }
     const handleIssueTicket = (event) => {
-        //debugger
+
         if (window.confirm("Are you sure you want to upgrade this ticket to Issue Status?")) {
             event.preventDefault()
             IssueTicket(Ticket.id)
-                .then(() => history.push("/myTickets")
+                .then(() => {
+                    setCloseTicket(!closeTicket)
+                    history.push("/myTickets")
+                }
                 )
         } else {
             history.push("/")
@@ -34,7 +39,7 @@ export default function UserProfileCard({ Ticket }) {
 
     }
     const handleOpenTicket = (event) => {
-        //debugger
+
 
         event.preventDefault()
         OpenTicket(Ticket.id)
@@ -54,19 +59,19 @@ export default function UserProfileCard({ Ticket }) {
                 {/* <img className="profilePicture" src={Ticket.imageLocation} /> */}
                 <CardBody className="displayFlex">
                     <div className="displayFlex alignCenter">
-                        {Ticket.ticketStatus.name == "Open" &&
+                        {Ticket.ticketStatus.name === "Open" &&
                             <div className="ticketBadge ticketCol ticketCol open"><h1 className="textAlign">{Ticket.ticketStatus.name} Ticket!</h1></div>
                         }
-                        {Ticket.ticketStatus.name == "Claimed" &&
+                        {Ticket.ticketStatus.name === "Claimed" &&
                             <div className="ticketBadge ticketCol claimed"><h1 className="textAlign">{Ticket.ticketStatus.name}</h1></div>
                         }
-                        {Ticket.ticketStatus.name == "Issue" &&
+                        {Ticket.ticketStatus.name === "Issue" &&
                             <div className="ticketBadge ticketCol issue"><h1 className="textAlign">!{Ticket.ticketStatus.name}!</h1></div>
                         }
-                        {Ticket.ticketStatus.name == "Waiting" &&
+                        {Ticket.ticketStatus.name === "Waiting" &&
                             <div className="ticketBadge ticketCol waiting"><h1 className="textAlign">...{Ticket.ticketStatus.name}...</h1></div>
                         }
-                        {Ticket.ticketStatus.name == "Closed" &&
+                        {Ticket.ticketStatus.name === "Closed" &&
                             <div className="ticketBadge ticketCol  closed">
                                 <h1 className="textAlign">/{Ticket.ticketStatus.name}/
                                 </h1>
@@ -75,7 +80,7 @@ export default function UserProfileCard({ Ticket }) {
                         {!Ticket.ticketStatus &&
                             <div><h1 className="err">Ticket Status Error!</h1></div>
                         }
-                        {Ticket.ticketType.name == "Food" &&
+                        {Ticket.ticketType.name === "Food" &&
                             <div className="ticketCol">
                                 <h2 className="textAlign">Category:
                                 </h2>
@@ -83,7 +88,7 @@ export default function UserProfileCard({ Ticket }) {
                                 </h2>
                             </div>
                         }
-                        {Ticket.ticketType.name == "Bill" &&
+                        {Ticket.ticketType.name === "Bill" &&
                             <div className="ticketCol">
                                 <h2 className="textAlign">Category:
                                 </h2>
@@ -91,7 +96,7 @@ export default function UserProfileCard({ Ticket }) {
                                 </h2>
                             </div>
                         }
-                        {Ticket.ticketType.name == "Maintenance" &&
+                        {Ticket.ticketType.name === "Maintenance" &&
                             <div className="ticketCol">
                                 <h2 className="textAlign">Category:
                                 </h2>
@@ -99,7 +104,7 @@ export default function UserProfileCard({ Ticket }) {
                                 </h2>
                             </div>
                         }
-                        {Ticket.ticketType.name == "Concierge" &&
+                        {Ticket.ticketType.name === "Concierge" &&
                             <div className="ticketCol">
                                 <h2 className="textAlign">Category:
                                 </h2>
@@ -107,14 +112,14 @@ export default function UserProfileCard({ Ticket }) {
                                 </h2>
                             </div>
                         }
-                        {Ticket.ticketType.name == "Parking" &&
+                        {Ticket.ticketType.name === "Parking" &&
                             <div className="ticketCol">
                                 <h2 className="textAlign">Category:</h2>
                                 <h2 className="textAlign parking">{Ticket.ticketType.name}
                                 </h2>
                             </div>
                         }
-                        {Ticket.ticketType.name == "Security" &&
+                        {Ticket.ticketType.name === "Security" &&
                             <div className="ticketCol">
                                 <h2 className="textAlign">Category:
                                 </h2>
@@ -139,7 +144,7 @@ export default function UserProfileCard({ Ticket }) {
                             </h4>
                         </div>
                         <div className="ticketCol">
-                            {Ticket.ticketStatus.name != "Issue" &&
+                            {Ticket.ticketStatus.name !== "Issue" &&
                                 <><button onClick={handleIssueTicket} className="issue">ISSUE</button></>
                             }
                         </div>
@@ -147,10 +152,10 @@ export default function UserProfileCard({ Ticket }) {
                     <div className="displayFlex row">
                         <div className="displayFlex col alignCenter">
                             <button className="col claimed">Details</button>
-                            {Ticket.ticketStatus.name != "Closed" &&
+                            {Ticket.ticketStatus.name !== "Closed" &&
                                 <button onClick={handleCloseTicket} title="Close Ticket" className="col closed">CLOSE</button>
                             }
-                            {Ticket.ticketStatus.name == "Closed" &&
+                            {Ticket.ticketStatus.name === "Closed" &&
                                 <button onClick={handleOpenTicket} title="Open Ticket" className="col open">REOPEN</button>
                             }
                         </div>

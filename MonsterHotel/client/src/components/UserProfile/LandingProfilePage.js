@@ -7,7 +7,7 @@ export default function UserProfileList({ isLoggedIn }) {
     const [isActive, setIsActive] = useState();
     const getUser = () => {
         getCurrentProfile().then((user) => {
-            // if (!userProfile == undefined) {
+            // if (!userProfile === undefined) {
             setUserProfile(user);
             // }
         });
@@ -27,13 +27,13 @@ export default function UserProfileList({ isLoggedIn }) {
 
     useEffect(() => {
         if (isLoggedIn) {
-            // // debugger
+
             getUser();
             userIsActive();
         }
-        if (userProfile == undefined) {
-            getUser();
-        }
+        // if (userProfile === undefined) {
+        //     getUser();
+        // }
     }, [isLoggedIn]);
     // console.log("USESTATE USERPROFILE", userProfile);
     // console.log("USESTATE ISACTIVE", isActive);
@@ -45,7 +45,7 @@ export default function UserProfileList({ isLoggedIn }) {
                     <h1>Welcome to Monster Hotel, {userProfile.firstName}!</h1>
                     <Card className="m-4">
                         <div className="displayFlex">
-                            <img className="profilePicture border" src={userProfile.imageLocation} al="Profile" />
+                            <img className="profilePicture border" alt={userProfile.displayName} src={userProfile.imageLocation} al="Profile" />
                             <CardBody className="">
                                 <p><strong>{userProfile.userType.name} User: </strong>{userProfile.fullName}</p>
                                 <p><strong>Display Name: </strong>{userProfile.displayName}</p>

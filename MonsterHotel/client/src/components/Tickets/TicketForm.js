@@ -2,17 +2,34 @@ import React, { useEffect, useState } from 'react';
 import { getAllTicketTypes } from '../../modules/ticketTypeManager';
 import { addTicket } from '../../modules/ticketManager';
 import { useHistory } from 'react-router-dom';
+import { getCurrentProfile } from '../../modules/userProfileManager';
 
 const TicketForm = () => {
-    const [ticket, setTicket] = useState({});
+    const [user, setUser] = useState([]);
+    const [ticket, setTicket] = useState({
+        ticketTypeId: "",
+        title: "",
+        description: "",
+        imageUrl: "",
+        userProfileId: user.id,
+        ticketStatusId: 1,
+        isActive: true
+    });
     const [ticketTypeSelect, setTicketTypeSelect] = useState('');
     const [ticketTypeList, setTicketTypeList] = useState([])
     const [isLoading, setIsLoading] = useState(false);
     const history = useHistory()
+    const getUserId = () => {
+        getCurrentProfile().then((user) => {
+            setUser(user)
+            console.log("TESTTESTTEST", user)
 
+        });
+    };
 
     //fetch list of all categories for dropdown
     useEffect(() => {
+        getUserId()
         getAllTicketTypes()
             .then(res => {
                 setTicketTypeList(res)
@@ -50,7 +67,8 @@ const TicketForm = () => {
         if (ticketTypeSelect === '') {
             alert("Please select a Ticket Category")
         } else {
-            addTicket(newTicket).then(() => history.push('/'))
+
+            addTicket(newTicket).then(() => history.push('/Tickets'))
         }
     }
 
@@ -60,15 +78,15 @@ const TicketForm = () => {
                 <div className='ticket-form'>
                     <div className='ticketType-dropdown'>
 
-                        <label htmlFor="categories" >Choose a Category</label>
-                        <select value={ticketTypeSelect} name="categories" onChange={handleDropdownChange}>
-                            <option value={ticketTypeSelect} selected>Please Select a Ticket Category</option>
+                        <label htmlFor="ticketTypes" >Ticket Category:</label>
+                        <select value={ticketTypeSelect} name="ticketTypes" onChange={handleDropdownChange}>
+                            <option selected>Please Select a Ticket Category</option>
                             {ticketTypeList.map(c => (
                                 <option
                                     htmlFor={c.name}
                                     key={c.id * Math.random()}
                                     value={c.id}
-                                // onSelect={ handleControlledInputChange }
+                                    onSelect={handleControlledInputChange}
                                 >
                                     {c.name}
                                 </option>
@@ -79,15 +97,15 @@ const TicketForm = () => {
                     <form action="">
                         <label htmlFor="title">Title:</label>
                         <input type="text" id="title" onChange={handleControlledInputChange} required className='form-control' placeholder='Enter a title' defaultValue={ticket.title} />
-                        <label htmlFor="imageLocation">Image URL:</label>
+                        <label htmlFor="imageLocation">Optional Image URL:</label>
                         <input type="text" id="imageLocation" onChange={handleControlledInputChange} className='form-control' placeholder='Image URL (optional)' defaultValue={ticket.imageLocation} />
-                        <label htmlFor="content">Content:</label>
-                        <textarea type="text" id="content" onChange={handleControlledInputChange} required className='form-control' placeholder="Write stuff here..." rows="3" defaultValue={ticket.content} />
+                        <label htmlFor="description">Description:</label>
+                        <textarea type="text" id="description" onChange={handleControlledInputChange} required className='form-control' placeholder="Write stuff here..." rows="3" defaultValue={ticket.description} />
                     </form>
                 </div>
             </fieldset>
             <div className='save-button'>
-                <button className='btn' type='button' disabled={isLoading} variant='primary' onClick={handleClickSaveEntry}>Save Ticket</button>
+                <button className='btn open' type='button' disabled={isLoading} variant='primary' onClick={handleClickSaveEntry}>Add Ticket</button>
             </div>
         </>
     )

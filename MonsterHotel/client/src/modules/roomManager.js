@@ -2,9 +2,9 @@
 import "firebase/auth";
 import { getToken } from './authManager'
 
-const baseUrl = '/api/TicketType';
+const baseUrl = '/api/Room';
 
-export const getAllTicketTypes = () => {
+export const getAllRooms = () => {
     return getToken().then((token) =>
         fetch(`${baseUrl}`, {
             method: "GET",

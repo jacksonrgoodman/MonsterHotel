@@ -8,6 +8,13 @@ namespace MonsterHotel.Models
         public int Floor { get; set; }
 
         public string Name { get; set; }
+        public string FullName
+        {
+            get
+            {
+                return $"{Floor}{Name}";
+            }
+        }
 
     }
 }

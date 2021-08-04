@@ -7,18 +7,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using MonsterHotel.Models;
 using MonsterHotel.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MonsterHotel.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class StayController : ControllerBase
     {
         private readonly IStayRepository _stayRepository;
         private readonly IUserProfileRepository _userProfileRepository;
-        public StayController(IStayRepository stayRepository)
+        public StayController(IStayRepository stayRepository, IUserProfileRepository userProfileRepository)
         {
             _stayRepository = stayRepository;
+            _userProfileRepository = userProfileRepository;
         }
 
         [HttpGet]
@@ -31,6 +34,17 @@ namespace MonsterHotel.Controllers
         public IActionResult Get(int id)
         {
             var stay = _stayRepository.GetById(id);
+            if (stay == null)
+            {
+                return NotFound();
+            }
+            return Ok(stay);
+        }
+        [HttpGet("Room/{id}")]
+        public IActionResult GetByRoomId(int id)
+        {
+            var currentUser = GetCurrentUserProfile();
+            var stay = _stayRepository.GetByRoomId(id);
             if (stay == null)
             {
                 return NotFound();
@@ -83,10 +97,10 @@ namespace MonsterHotel.Controllers
         public IActionResult Add(Stay stay)
         {
             var currentUser = GetCurrentUserProfile();
-            if (currentUser.UserType.Name != "admin")
-            {
-                return Unauthorized();
-            }
+            //if (currentUser.UserType.Name != "admin")
+            //{
+            //    return Unauthorized();
+            //}
             //stay.CheckInTime = DateTime.Now;
             //stay.PublishDateTime = DateTime.Now;
             stay.HandlerId = currentUser.Id;
@@ -95,35 +109,35 @@ namespace MonsterHotel.Controllers
             return CreatedAtAction(nameof(Get), new { id = stay.Id }, stay);
         }
         [HttpPut("CheckIn/{id}")]
-        public IActionResult CheckIn(Stay stay)
+        public IActionResult CheckIn(int id)
         {
-            var currentUser = GetCurrentUserProfile();
-            if (currentUser.UserType.Name != "guest")
-            {
-                return Unauthorized();
-            }
-            stay.CheckInTime = DateTime.Now;
-            //stay.PublishDateTime = DateTime.Now;
-            stay.GuestId = currentUser.Id;
-            stay.IsCheckedIn = true;
-            _stayRepository.CheckIn(stay);
-            return CreatedAtAction(nameof(Get), new { id = stay.Id }, stay);
+            //var currentUser = GetCurrentUserProfile();
+            //if (currentUser.UserType.Name != "guest")
+            //{
+            //    return Unauthorized();
+            //}
+            //stay.CheckInTime = DateTime.Now;
+            ////stay.PublishDateTime = DateTime.Now;
+            //stay.GuestId = currentUser.Id;
+            //stay.IsCheckedIn = true;
+            _stayRepository.CheckIn(id);
+            return NoContent();
         }
         [HttpPut("CheckOut/{id}")]
-        public IActionResult CheckOut(Stay stay)
+        public IActionResult CheckOut(int id)
         {
             var currentUser = GetCurrentUserProfile();
             //if (currentUser.UserType.Name != "guest")
             //{
             //    return Unauthorized();
             //}
-            stay.CheckOutTime = DateTime.Now;
+            //stay.CheckOutTime = DateTime.Now;
             //stay.PublishDateTime = DateTime.Now;
             //stay.GuestId = currentUser.Id;
-            stay.IsActive = false;
-            stay.IsCheckedIn = false;
-            _stayRepository.CheckOut(stay);
-            return CreatedAtAction(nameof(Get), new { id = stay.Id }, stay);
+            //stay.IsActive = false;
+            //stay.IsCheckedIn = false;
+            _stayRepository.CheckOut(id);
+            return NoContent();
         }
 
         private UserProfile GetCurrentUserProfile()
