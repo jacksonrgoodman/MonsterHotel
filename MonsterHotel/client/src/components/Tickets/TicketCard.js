@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { Card, CardBody } from "reactstrap";
 import { CloseTicket, OpenTicket, IssueTicket, DeactivateTicket, ActivateTicket } from "../../modules/ticketManager";
 
-export default function UserProfileCard({ Ticket }) {
+export default function UserProfileCard({ Ticket, closeTicket, setCloseTicket }) {
     console.log("Ticket", Ticket)
     const history = useHistory()
     const handleCloseTicket = (event) => {
@@ -12,8 +12,10 @@ export default function UserProfileCard({ Ticket }) {
             event.preventDefault()
             CloseTicket(Ticket.id)
                 .then(() =>
-                    DeactivateTicket(Ticket.id).then(() =>
+                    DeactivateTicket(Ticket.id).then(() => {
+                        setCloseTicket(!closeTicket)
                         history.push("/myTickets")
+                    }
                     )
                 )
         } else {
@@ -26,7 +28,10 @@ export default function UserProfileCard({ Ticket }) {
         if (window.confirm("Are you sure you want to upgrade this ticket to Issue Status?")) {
             event.preventDefault()
             IssueTicket(Ticket.id)
-                .then(() => history.push("/myTickets")
+                .then(() => {
+                    setCloseTicket(!closeTicket)
+                    history.push("/myTickets")
+                }
                 )
         } else {
             history.push("/")

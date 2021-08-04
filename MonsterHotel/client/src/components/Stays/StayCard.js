@@ -15,7 +15,8 @@ export default function StayCard({ Stay }) {
     const minute1 = (timeSplit1[1])
     const midnightCheck1 = (hour1 === "00" ? "12" : hour1)
     const nightNoon1 = (hour1 > 12 ? " PM" : " AM")
-    const TimeStamp1 = day1 + "/" + month1 + "/" + year1 + " @ " + midnightCheck1 + ":" + minute1 + "" + nightNoon1;
+    const TimeStamp1 = day1 + "/" + month1 + "/" + year1
+    //+ " @ " + midnightCheck1 + ":" + minute1 + "" + nightNoon1;
     const createTime2 = (Stay.checkOutTime.split("T"))
     const time2 = (createTime2.pop())
     const date2 = (createTime2.shift())
@@ -28,7 +29,8 @@ export default function StayCard({ Stay }) {
     const minute2 = (timeSplit2[1])
     const midnightCheck2 = (hour2 === "00" ? "12" : hour2)
     const nightNoon2 = (hour2 > 12 ? " PM" : " AM")
-    const TimeStamp2 = day2 + "/" + month2 + "/" + year2 + " @ " + midnightCheck2 + ":" + minute2 + "" + nightNoon2;
+    const TimeStamp2 = day2 + "/" + month2 + "/" + year2
+    //+ " @ " + midnightCheck2 + ":" + minute2 + "" + nightNoon2;
 
     return (
         <Card className="m-4">

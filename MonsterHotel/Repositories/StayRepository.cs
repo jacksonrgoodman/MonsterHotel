@@ -382,7 +382,7 @@ namespace MonsterHotel.Repositories
                     JOIN UserProfile g ON s.GuestId = g.Id
                     JOIN UserProfile h ON s.HandlerId = h.Id
                     JOIN Rooms r ON s.RoomId = r.Id
-                    WHERE s.RoomId = @id AND s.IsCheckedIn = 1
+                    WHERE s.RoomId = @id AND s.IsCheckedIn = 1 AND s.IsActive = 1
                     ";
 
                     DbUtils.AddParameter(cmd, "@id", id);
@@ -521,7 +521,7 @@ namespace MonsterHotel.Repositories
                     JOIN UserProfile g ON s.GuestId = g.Id
                     JOIN UserProfile h ON s.HandlerId = h.Id
                     JOIN Rooms r ON s.RoomId = r.Id
-                    WHERE s.HandlerId = @id AND s.IsActive = 1
+                    WHERE s.HandlerId = @id AND s.IsActive = 1 AND s.IsCheckedIn = 1
                     ";
                     DbUtils.AddParameter(cmd, "@id", id);
 

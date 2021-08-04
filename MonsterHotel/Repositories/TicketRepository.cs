@@ -108,7 +108,7 @@ namespace MonsterHotel.Repositories
                     JOIN TicketType tt ON t.TicketTypeId = tt.Id
                     JOIN TicketStatus ts ON t.TicketStatusId = ts.Id
                     JOIN UserProfile up ON t.UserProfileId = up.Id
-                    WHERE t.TicketTypeId = 3
+                    WHERE t.TicketStatusId = 3
                     ORDER BY t.CreateDateTime
                     ";
 

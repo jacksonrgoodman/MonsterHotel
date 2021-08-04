@@ -10,12 +10,12 @@ const StayForm = () => {
     const [user, setUser] = useState({});
     const [stay, setStay] = useState({
         roomId: 0,
-        guestId: 1,
+        guestId: 4,
         handlerId: user.id,
         checkInTime: placeholderDate,
         checkOutTime: placeholderDate,
         isCheckedIn: false,
-        isActive: false
+        isActive: true
     });
     const [stayRoomSelect, setStayRoomSelect] = useState('');
     const [stayRoomList, setStayRoomList] = useState([])

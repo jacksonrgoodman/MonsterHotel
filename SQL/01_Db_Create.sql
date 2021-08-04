@@ -60,6 +60,11 @@ CREATE TABLE [TicketStatus] (
   [Name] nvarchar(50) NOT NULL
 )
 GO
+CREATE TABLE [TicketBribe] (
+  [Id] INTEGER PRIMARY KEY NOT NULL IDENTITY(1, 1),
+  [Name] nvarchar(50) NOT NULL
+)
+GO
 
 CREATE TABLE [Rooms] (
   [Id] int PRIMARY KEY NOT NULL IDENTITY,

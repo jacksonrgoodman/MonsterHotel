@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { NavLink as RRNavLink } from "react-router-dom";
 import {
     Collapse,
@@ -10,13 +10,15 @@ import {
     NavLink
 } from 'reactstrap';
 import { logout } from "../modules/authManager";
+import { headerContext } from '../modules/headerProvider';
 import { getCurrentProfile } from '../modules/userProfileManager';
 
-export default function Header({ isLoggedIn }) {
+
+export default function Header({ isLoggedIn, props }) {
     const [isOpen, setIsOpen] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
-    const [isCheckedIn, setIsCheckedIn] = useState(true);
     const [isActive, setIsActive] = useState(true);
+    const { userIsCheckedIn, isCheckedIn } = useContext(headerContext)
     const toggle = () => setIsOpen(!isOpen);
 
     const userIsAdmin = () => {
@@ -30,17 +32,17 @@ export default function Header({ isLoggedIn }) {
             }
         });
     };
-    const userIsCheckedIn = () => {
-        getCurrentProfile().then((user) => {
-            console.log("NAVBAR CHECK:", user)
-            console.log("NAVBAR CHECK isCheckedIn:", user.isCheckedIn)
-            if (user.isCheckedIn) {
-                setIsCheckedIn(true);
-            } else {
-                setIsCheckedIn(false);
-            }
-        });
-    };
+    // const userIsCheckedIn = () => {
+    //     getCurrentProfile().then((user) => {
+    //         console.log("NAVBAR CHECK:", user)
+    //         console.log("NAVBAR CHECK isCheckedIn:", user.isCheckedIn)
+    //         if (user.isCheckedIn) {
+    //             setIsCheckedIn(true);
+    //         } else {
+    //             setIsCheckedIn(false);
+    //         }
+    //     });
+    // };
     const userIsActive = () => {
         getCurrentProfile().then((user) => {
             // console.log("NAVBAR CHECK:", user)
@@ -81,7 +83,10 @@ export default function Header({ isLoggedIn }) {
                                     <NavLink tag={RRNavLink} to="/guests">Guests</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/Tickets">Tickets</NavLink>
+                                    <NavLink tag={RRNavLink} to="/Tickets/Issues">ISSUE Tickets</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={RRNavLink} to="/Tickets/Deactivated">Closed Tickets</NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to="/myStays">My Stays</NavLink>
@@ -115,7 +120,7 @@ export default function Header({ isLoggedIn }) {
                         {isLoggedIn && isActive && !isCheckedIn && !isAdmin &&
                             <>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/CheckIn">Check In</NavLink>
+                                    <NavLink tag={RRNavLink} to={{ pathname: "/CheckIn", state: { isCheckedIn: isCheckedIn } }}>Check In</NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <a aria-current="page" className="nav-link"
@@ -146,6 +151,7 @@ export default function Header({ isLoggedIn }) {
                     </Nav>
                 </Collapse>
             </Navbar>
+
         </div >
     );
 }

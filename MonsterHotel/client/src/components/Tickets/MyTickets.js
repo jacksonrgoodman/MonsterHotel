@@ -4,10 +4,10 @@ import { getTickets } from "../../modules/ticketManager";
 
 export default function GuestList() {
     const [tickets, setTickets] = useState([]);
-
+    const [closeTicket, setCloseTicket] = useState(false);
     useEffect(() => {
         getTickets().then(setTickets);
-    }, []);
+    }, [closeTicket]);
 
     return (
         < section >
@@ -15,7 +15,7 @@ export default function GuestList() {
             {
                 console.log("ActiveGuests", tickets)}
             {tickets.map(q =>
-                <TicketCard key={q.id} Ticket={q} />
+                <TicketCard key={q.id} Ticket={q} closeTicket={closeTicket} setCloseTicket={setCloseTicket} />
             )
             }
         </section >

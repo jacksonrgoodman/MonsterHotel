@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { getAllRooms } from '../../modules/roomManager';
 import { getStayById, CheckIn, getAllStaysDeactive } from '../../modules/stayManager';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { CheckInUser, getCurrentProfile } from '../../modules/userProfileManager';
 import StayCardGuestView from "./StayCardGuestView";
 
-const StayForm = () => {
+const StayForm = (props) => {
     // const placeholderDate = new DateTime.Now()
     const [currentUser, setCurrentUser] = useState({});
     const [stay, setStay] = useState({});
@@ -14,6 +14,7 @@ const StayForm = () => {
     const [stayRoomCheck, setStayRoomCheck] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const history = useHistory()
+    const location = useLocation()
 
 
 
@@ -26,6 +27,9 @@ const StayForm = () => {
     const getUserId = () => {
         getCurrentProfile().then((user) => {
             setCurrentUser(user)
+            getStayById(user.id).then((stay) => {
+                setStay(stay)
+            });
             getStayById(user.id).then((stay) => {
                 setStay(stay)
             });
@@ -44,7 +48,7 @@ const StayForm = () => {
     return (
         <>
             {stayList.map(q =>
-                <StayCardGuestView key={q.id} Stay={q} />
+                <StayCardGuestView key={q.id} setStayCheckIn={location.state} Stay={q} />
             )
             }
 
