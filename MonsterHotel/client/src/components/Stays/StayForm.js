@@ -3,6 +3,7 @@ import { getAllRooms } from '../../modules/roomManager';
 import { addStay, checkByRoomId } from '../../modules/stayManager';
 import { useHistory } from 'react-router-dom';
 import { getCurrentProfile } from '../../modules/userProfileManager';
+import { Card, CardBody } from 'reactstrap';
 
 
 const StayForm = () => {
@@ -101,56 +102,58 @@ const StayForm = () => {
         } else if (stayRoomCheck === false) {
             alert("Please check if the room is open.")
         } else {
-            addStay(newStay).then(() => history.push('/myStays'))
+            addStay(newStay).then(() => history.push('/'))
         }
     }
 
     return (
         <>
-            <fieldset>
-                <div className='stay-form'>
-                    <div className='stayRoom-dropdown'>
+            <Card className="m-4">
+                <CardBody className="m-4">
+                    <h1>Add A Room For Guests To Check In
+                    </h1>
+                    <img className="miniLogo mlRUCorner" src="../../img/frank.png" />
+                </CardBody>
+                <CardBody>
+                    <fieldset>
+                        <div className='stay-form displayFlex justifyContent alignContent'>
+                            <div className='stayRoom-dropdown row displayFlex addStay'>
+                                <label htmlFor="stayRooms" ><h3>Select An Available Room :</h3></label>
+                                <select value={stayRoomSelect} name="stayRooms" onChange={handleDropdownChange}>
+                                    <option selected>Please Select A Room</option>
+                                    {stayRoomList.map(c => (
 
-                        <label htmlFor="stayRooms" >Stay Category:</label>
-                        <select value={stayRoomSelect} name="stayRooms" onChange={handleDropdownChange}>
-                            <option selected>Please Select A Room</option>
-                            {stayRoomList.map(c => (
-
-                                <option
-                                    htmlFor={c.fullName}
-                                    key={c.id
-                                        * Math.random()
+                                        <option
+                                            htmlFor={c.fullName}
+                                            key={c.id
+                                                * Math.random()
+                                            }
+                                            value={c.id}
+                                            onSelect={handleControlledInputChange}
+                                        >
+                                            {c.fullName}
+                                        </option>
+                                    ))
                                     }
-                                    value={c.id}
-                                    onSelect={handleControlledInputChange}
-                                >
-                                    {c.fullName}
-                                </option>
-                            ))
-                            }
-                        </select>
-                    </div>
+                                </select>
+                            </div>
+                        </div>
+                        <div className='displayFlex  justifyContent alignContent'>
 
-                    {/* <form action="">
-                        <label htmlFor="title">Title:</label>
-                        <input type="text" id="title" onChange={handleControlledInputChange} required className='form-control' placeholder='Enter a title' defaultValue={stay.title} />
-                        <label htmlFor="imageLocation">Optional Image URL:</label>
-                        <input type="text" id="imageLocation" onChange={handleControlledInputChange} className='form-control' placeholder='Image URL (optional)' defaultValue={stay.imageLocation} />
-                        <label htmlFor="description">Description:</label>
-                        <textarea type="text" id="description" onChange={handleControlledInputChange} required className='form-control' placeholder="Write stuff here..." rows="3" defaultValue={stay.description} />
-                    </form> */}
-                </div>
-            </fieldset>
-            {!stayRoomCheck &&
-                <>
-                    <p><strong>Select An Empty Room!</strong></p>
-                </>
-            }
-            {stayRoomCheck &&
-                <div className='save-button'>
-                    <button className='btn open' type='button' disabled={isLoading} variant='primary' onClick={handleClickSaveEntry}>Add Stay</button>
-                </div>
-            }
+                            {!stayRoomCheck &&
+                                <div>
+                                    <h2><strong>Select An Empty Room!</strong></h2>
+                                </div>
+                            }
+                            {stayRoomCheck &&
+                                <div className=' openStay save-button'>
+                                    <button className='btn ' type='button' disabled={isLoading} variant='primary' onClick={handleClickSaveEntry}><h2>Add Stay</h2></button>
+                                </div>
+                            }
+                        </div>
+                    </fieldset>
+                </CardBody>
+            </Card>
         </>
     )
 

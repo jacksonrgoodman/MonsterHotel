@@ -51,7 +51,7 @@ export default function StayCardGuestView({ Stay, setStayCheckIn }) {
                 <h1>Room {Stay.room.fullName}</h1>
 
                 <div className='save-button'>
-                    <button className='btn open' type='button' disabled={isLoading} variant='primary' onClick={handleClickSaveEntry}>CHECK IN</button>
+                    <button className=' open' type='button' disabled={isLoading} variant='primary' onClick={handleClickSaveEntry}>CHECK IN</button>
                 </div>
             </CardBody>
         </Card>

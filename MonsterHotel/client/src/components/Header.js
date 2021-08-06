@@ -65,67 +65,74 @@ export default function Header({ isLoggedIn, props }) {
     return (
         <div>
             <Navbar color="dark" dark expand="md">
+                <NavbarBrand tag={RRNavLink} to="/HomePage"><img className="logoPhoto" src="./img/ghostie-mini.png" /></NavbarBrand>
                 <NavbarBrand tag={RRNavLink} to="/">MonsterHotel</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
-                    <Nav navbar>
-                        <NavItem>
-                            <NavLink tag={RRNavLink} to="/about">About</NavLink>
-                        </NavItem>
-                    </Nav>
                     <Nav className="mr-auto" navbar>
+                        {isLoggedIn && isActive &&
+                            <NavItem>
+                                <NavLink className="fa fa-calendar-week fa-lg" title="Events" tag={RRNavLink} to="/WeeklyEvents"> Events</NavLink>
+                            </NavItem>
+                        }
                         {isLoggedIn && isActive && isAdmin &&
                             <>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/Stays/Create">Add A Stay</NavLink>
+                                    <NavLink className="fa fa-calendar-plus fa-lg" title="Create A Stay" tag={RRNavLink} to="/Stays/Create">Add Room</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/guests">Guests</NavLink>
+                                    <NavLink className="fa fa-user fa-lg" title="View Guests" tag={RRNavLink} to="/guests">Guests</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/Tickets/Issues">ISSUE Tickets</NavLink>
+                                    <NavLink className="fa fa-comment fa-lg" title="Tickets" tag={RRNavLink} to="/myTickets">Tickets</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/Tickets/Deactivated">Closed Tickets</NavLink>
+                                    <NavLink className="fa fa-comment-slash fa-lg" title="Closed Tickets" tag={RRNavLink} to="/Tickets/Deactivated">Old Tickets</NavLink>
                                 </NavItem>
                                 <NavItem>
+                                    <NavLink className="fa fa-exclamation-triangle fa-lg" title="Issue Tickets" tag={RRNavLink} to="/Tickets/Issues">Issues</NavLink>
+                                </NavItem>
+                                {/* <NavItem>
                                     <NavLink tag={RRNavLink} to="/myStays">My Stays</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink tag={RRNavLink} to="/myTickets">My Tickets</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <a aria-current="page" className="nav-link"
-                                        style={{ cursor: "pointer" }} onClick={logout}>Logout</a>
-                                </NavItem>
+                                </NavItem> */}
+
                             </>
                         }
                         {isLoggedIn && isActive && isCheckedIn && !isAdmin &&
                             <>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/Tickets/create">Add A Ticket</NavLink>
+                                    <NavLink className="fa fa-comment-medical fa-lg" title="Add A Ticket" tag={RRNavLink} to="/Tickets/create">Add Ticket</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/Tickets">Tickets</NavLink>
+                                    <NavLink className="fa fa-comment fa-lg" title="My Tickets" tag={RRNavLink} to="/Tickets">My Tickets</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/CheckOut">Check Out</NavLink>
+                                    <NavLink className="fas fa-caret-square-up fa-lg" title="Check In" tag={RRNavLink} to="/CheckOut">Check Out</NavLink>
                                 </NavItem>
-                                <NavItem>
-                                    <a aria-current="page" className="nav-link"
-                                        style={{ cursor: "pointer" }} onClick={logout}>Logout</a>
-                                </NavItem>
+
                             </>
                         }
                         {isLoggedIn && isActive && !isCheckedIn && !isAdmin &&
                             <>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to={{ pathname: "/CheckIn", state: { isCheckedIn: isCheckedIn } }}>Check In</NavLink>
+                                    <NavLink className="fas fa-caret-square-down fa-lg" title="Check In" tag={RRNavLink} to={{ pathname: "/CheckIn", state: { isCheckedIn: isCheckedIn } }}>Check In</NavLink>
                                 </NavItem>
-                                <NavItem>
-                                    <a aria-current="page" className="nav-link"
-                                        style={{ cursor: "pointer" }} onClick={logout}>Logout</a>
-                                </NavItem>
+
+                            </>
+                        }
+                        <Nav navbar>
+                            <NavItem>
+                                <NavLink className="fa fa-question-circle fa-lg" title="About" tag={RRNavLink} to="/about">About</NavLink>
+                            </NavItem>
+                        </Nav>
+                        {isLoggedIn && isActive &&
+                            <>
+                                <Nav>
+                                    <NavItem>
+                                        <NavLink className="fa fa-sign-out-alt fa-lg" title="Logout" aria-current="page"
+                                            style={{ cursor: "pointer" }} onClick={logout}>Logout</NavLink>
+                                    </NavItem>
+                                </Nav>
                             </>
                         }
                         {isLoggedIn && !isActive &&
@@ -133,18 +140,20 @@ export default function Header({ isLoggedIn, props }) {
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to="/login">Remediating Your Account</NavLink>
                                 </NavItem>
-                                {/* <NavItem>
-                                            <NavLink tag={RRNavLink} to="/register">Register</NavLink>
-                                        </NavItem> */}
+                                <NavItem>
+                                    <NavLink className="fa fa-sign-out-alt fa-lg" title="Logout" aria-current="page"
+
+                                        style={{ cursor: "pointer" }} onClick={logout}>Logout</NavLink>
+                                </NavItem>
                             </>
                         }
                         {!isLoggedIn &&
                             <>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/login">Login</NavLink>
+                                    <NavLink className="fa fa-sign-in-alt fa-lg" title="Login" tag={RRNavLink} to="/login">Login</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/register">Register</NavLink>
+                                    <NavLink className="fa fa-flag fa-lg" title="Register" tag={RRNavLink} to="/register">Register</NavLink>
                                 </NavItem>
                             </>
                         }

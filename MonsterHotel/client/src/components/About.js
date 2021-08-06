@@ -1,15 +1,26 @@
 import React from "react";
 import { Card, CardBody } from "reactstrap";
 
-export default function About({ Stay }) {
-    console.log("Stay", Stay)
+export default function Events() {
     return (
         <Card className="m-4">
             <CardBody>
-                <h1>Monster Hotel</h1>
+                <h1>MonsterHotel</h1>
+                <img className="aboutPhoto" src="./img/haunted-hotel-transparent.png" alt="Events" />
                 <p><strong>About: </strong></p>
-                <p><strong></strong></p>
+                <p><strong></strong>Monster Hotel is a Full-Stack React & ASP.NET Application for managing haunted hotels.</p>
+
                 <p><strong>Created By: </strong>Jackson Goodman for C47's Backend</p>
+
+                <img src="https://img.shields.io/badge/c%23-006400.svg?style=for-the-badge&logo=c-sharp&logoColor=white" alt="C#" />
+                <img src="https://img.shields.io/badge/SQL-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white" alt="SQL" />
+                <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
+                <img src="https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="Javascript" />
+                <img src="https://img.shields.io/badge/VisualStudio-5C2D91.svg?style=for-the-badge&logo=visual-studio&logoColor=white" alt="VS 2019" />
+                <img src="https://img.shields.io/badge/ASP.NET-%231572B6.svg?style=for-the-badge&logo=.net&logoColor=white" alt="ASP.NET" />
+                <img src="https://img.shields.io/badge/Html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" />
+                <img src="https://img.shields.io/badge/css3%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" />
+
                 <p><strong>With Thanks To: </strong>
                     My Family,
                     Nashville Software School's Cohort 47,
@@ -18,13 +29,25 @@ export default function About({ Stay }) {
                 <h5> Including:</h5>
                 <ul>
                     <li>
-                        Tyler Hilliard
+                        Tyler Hilliard(Capstone Mentor)
                     </li>
                     <li>
                         Andy Collins
                     </li>
                     <li>
+                        Christine Doza
+                    </li>
+                    <li>
+                        David Darden
+                    </li>
+                    <li>
                         Nick Patton
+                    </li>
+                    <li>
+                        Laurel Morrison
+                    </li>
+                    <li>
+                        Alex Dudley
                     </li>
                     <li>
                         Brandon Hill
@@ -33,13 +56,13 @@ export default function About({ Stay }) {
                         Carter Culkin
                     </li>
                     <li>
-                        David Darden
+                        Colten Mayberry
+                    </li>
+                    <li>
+                        Sidney Crandall
                     </li>
                     <li>
                         Meg McGregor
-                    </li>
-                    <li>
-                        Christine Doza
                     </li>
                     <li>
                         Brenda Long
@@ -56,6 +79,7 @@ export default function About({ Stay }) {
                 </ul>
 
             </CardBody>
+            <img className="cornerLogoGhost" src="../../img/ghostie.png" />
         </Card>
     );
 }

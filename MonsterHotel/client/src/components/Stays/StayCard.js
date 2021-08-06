@@ -38,7 +38,7 @@ export default function StayCard({ Stay }) {
             <CardBody>
                 <h1>STAY #{Stay.id}</h1>
                 <p><strong> Room: </strong>{Stay.room.floor}{Stay.room.name}</p>
-                <p><strong> Guest: </strong>{Stay.guest.displayName}</p>
+                {/* <p><strong> Guest: </strong>{Stay.guest.displayName}</p> */}
                 <p><strong>Created By: </strong>{Stay.handler.displayName}</p>
                 {Stay.isCheckedIn &&
                     <>

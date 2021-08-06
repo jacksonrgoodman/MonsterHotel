@@ -56,8 +56,25 @@ export const ActivateTicket = (id) => {
     );
 }
 
+export const getDeactivatedTicketsById = (id) => {
+    return getToken().then((token) => {
+        return fetch(`${baseUrl}/AllDeactivatedByUserId/${id}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(res => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                throw new Error("Something went wrong :(")
+            }
+        })
+    })
+};
 export const getTicketsById = (id) => {
     return getToken().then((token) => {
+        //debugger
         return fetch(`${baseUrl}/AllActiveByUserId/${id}`, {
             method: "GET",
             headers: {
@@ -85,6 +102,18 @@ export const OpenTicket = (id) => {
         //.then((res) => res.json())
     );
 }
+export const ClaimTicket = (id) => {
+    return getToken().then((token) =>
+        fetch(`${baseUrl}/Claim/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        })
+        //.then((res) => res.json())
+    );
+}
 export const CloseTicket = (id) => {
     return getToken().then((token) =>
         fetch(`${baseUrl}/Close/${id}`, {
@@ -97,6 +126,8 @@ export const CloseTicket = (id) => {
         //.then((res) => res.json())
     );
 }
+
+
 export const IssueTicket = (id) => {
     return getToken().then((token) =>
         fetch(`${baseUrl}/IssueTicket/${id}`, {

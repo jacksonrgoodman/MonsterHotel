@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAllTicketTypes } from '../../modules/ticketTypeManager';
 import { addTicket } from '../../modules/ticketManager';
+import { Card, CardBody } from "reactstrap";
 import { useHistory } from 'react-router-dom';
 import { getCurrentProfile } from '../../modules/userProfileManager';
 
@@ -73,41 +74,51 @@ const TicketForm = () => {
     }
 
     return (
-        <>
-            <fieldset>
-                <div className='ticket-form'>
-                    <div className='ticketType-dropdown'>
+        <Card>
+            <CardBody>
+                <h1>Add A Ticket</h1>
+                <Card className="displayFlex border">
+                    <CardBody>
+                        <fieldset>
+                            <div className='ticket-form'>
+                                <div className='ticketType-dropdown'>
 
-                        <label htmlFor="ticketTypes" >Ticket Category:</label>
-                        <select value={ticketTypeSelect} name="ticketTypes" onChange={handleDropdownChange}>
-                            <option selected>Please Select a Ticket Category</option>
-                            {ticketTypeList.map(c => (
-                                <option
-                                    htmlFor={c.name}
-                                    key={c.id * Math.random()}
-                                    value={c.id}
-                                    onSelect={handleControlledInputChange}
-                                >
-                                    {c.name}
-                                </option>
-                            ))
-                            }
-                        </select>
-                    </div>
-                    <form action="">
-                        <label htmlFor="title">Title:</label>
-                        <input type="text" id="title" onChange={handleControlledInputChange} required className='form-control' placeholder='Enter a title' defaultValue={ticket.title} />
-                        <label htmlFor="imageLocation">Optional Image URL:</label>
-                        <input type="text" id="imageLocation" onChange={handleControlledInputChange} className='form-control' placeholder='Image URL (optional)' defaultValue={ticket.imageLocation} />
-                        <label htmlFor="description">Description:</label>
-                        <textarea type="text" id="description" onChange={handleControlledInputChange} required className='form-control' placeholder="Write stuff here..." rows="3" defaultValue={ticket.description} />
-                    </form>
-                </div>
-            </fieldset>
-            <div className='save-button'>
-                <button className='btn open' type='button' disabled={isLoading} variant='primary' onClick={handleClickSaveEntry}>Add Ticket</button>
-            </div>
-        </>
+                                    <label htmlFor="ticketTypes" >Ticket Category:</label>
+                                    <select value={ticketTypeSelect} name="ticketTypes" onChange={handleDropdownChange}>
+                                        <option selected>Please Select a Ticket Category</option>
+                                        {ticketTypeList.map(c => (
+                                            <option
+                                                htmlFor={c.name}
+                                                key={c.id * Math.random()}
+                                                value={c.id}
+                                                onSelect={handleControlledInputChange}
+                                            >
+                                                {c.name}
+                                            </option>
+                                        ))
+                                        }
+                                    </select>
+                                </div>
+                                <form action="">
+                                    <label htmlFor="title">Title:</label>
+                                    <input type="text" id="title" onChange={handleControlledInputChange} required className='form-control' placeholder='Enter a title' defaultValue={ticket.title} />
+                                    <label htmlFor="imageLocation">Optional Image URL:</label>
+                                    <input type="text" id="imageLocation" onChange={handleControlledInputChange} className='form-control' placeholder='Image URL (optional)' defaultValue={ticket.imageLocation} />
+                                    <label htmlFor="description">Description:</label>
+                                    <textarea type="text" id="description" onChange={handleControlledInputChange} required className='form-control no-resize' placeholder="Write stuff here..." rows="3" defaultValue={ticket.description} />
+                                </form>
+                            </div>
+                        </fieldset>
+                        <br />
+                        <div className=''>
+                            <button className='open' type='button' disabled={isLoading} variant='primary' onClick={handleClickSaveEntry}>Add Ticket</button>
+                        </div>
+
+                    </CardBody>
+                </Card>
+                <img className="miniLogoGhost" src="../../img/ghostie.png" />
+            </CardBody>
+        </Card>
     )
 
 };

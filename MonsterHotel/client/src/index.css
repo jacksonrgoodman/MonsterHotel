@@ -1,6 +1,12 @@
-main {
-  margin: 2em;
+html {
+
+  background-color: grey;
 }
+#root {
+  
+  background-color: grey;
+}
+
 .app-spinner {
   position: fixed;
   top: 50%;
@@ -14,6 +20,10 @@ p {
 }
 button {
   font-size: 18em;
+}
+
+.no-resize {
+  resize: none;
 }
 
 .post p {
@@ -32,11 +42,121 @@ button {
 .alignCenter {
   align-items: center;
 }
+.justifyContent {
+  justify-content: center;
+}
+.justifyContentEvenly {
+  justify-content: space-evenly;
+}
+.justifyContentEnd {
+  justify-content: flex-end;
+}
+.alignContent {
+  align-content: center;
+}
+.alignSelf {
+  align-self: center;
+}
 .textAlign {
   text-align: center;
 }
+.fitContent {
+  width: fit-content;
+}
+.container {
+  height: 15rem;
+  position: relative;
+}
+.horizon-center {
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  -ms-transform: translate(-50%, -0);
+  transform: translate(-50%, -0);
+}
+.centerBigButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
 .profilePicture {
-  width: 10rem;
+  width: 30%;
+}
+.eventPhoto {
+  max-width: 50%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.logoPhoto {
+  margin-left: 3rem;
+  width: 2rem;
+}
+.miniLogoGhost {
+  width: 4rem;
+  opacity: 0.5;
+  transform: scaleX(-1);
+  position: absolute;
+right: 2rem;
+bottom: .5rem;
+}
+.miniLogo {
+  width: 4rem;
+  transform: scaleX(-1);
+
+}
+.mlLUCorner {
+  position: absolute;
+  transform: rotate(355deg);
+  left: 2rem;
+  top: .5rem;
+}
+.mlLDCorner {
+  position: absolute;
+  left: 2rem;
+  bottom: .5rem;
+}
+.mlRUCorner {
+  position: absolute;
+  transform: rotate(5deg);
+  right: 2rem;
+  top: .5rem;
+}
+.mlRDCorner {
+  position: absolute;
+right: 2rem;
+bottom: .5rem;
+}
+.miniLogoFrank {
+  width: 4rem;
+  opacity: 0.5;
+  transform: scaleX(-1);
+  position: absolute;
+right: 2rem;
+bottom: .5rem;
+}
+.cornerLogoGhost {
+  width: 4rem;
+  opacity: 0.5;
+  transform: scaleX(-1);
+  position: absolute;
+right: 2rem;
+top: .5rem;
+}
+.aboutPhoto {
+  width: 15rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 .ticketBadge {
   border: solid 1px #BCBCBC;
@@ -46,11 +166,20 @@ button {
   margin: 2rem;
   width: fit-content;
 }
+.addStay {
+  margin: 2rem;
+  text-align: center;
+}
 .open{
   background: #BAFFC5;
   border-radius: 8rem;
   padding: 1rem;
-  
+}
+.openStay{
+  background: #BAFFC5;
+  border-radius: 8rem;
+  padding: 1rem;
+  width:max-content
 }
 .claimed{
   background: #FFCF54;
@@ -63,6 +192,13 @@ button {
   border-radius: 8rem;
   color:ivory
 }
+.issueStay{
+  background: #FF7E7E;
+  padding: 1rem;
+  border-radius: 8rem;
+  color:ivory;
+  width:max-content;
+}
 .waiting{
   background: #84E1FF;
   padding: 1rem;
@@ -74,8 +210,15 @@ button {
   padding: 1rem;
   color:ivory
 }
+.closedStay{
+  background: #817EFF;
+  border-radius: 8rem;
+  padding: 1rem;
+  color:ivory;
+  width:max-content;
+}
 .border {
-  border: 1px solid red;
+  border: 3px solid green;
 }
 
 .justifyCenter {
