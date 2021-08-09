@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { Card, CardBody } from "reactstrap";
 import { CloseTicket, OpenTicket, IssueTicket, DeactivateTicket, ActivateTicket } from "../../modules/ticketManager";
 
-export default function GuestTicketCard({ Ticket }) {
+export default function GuestTicketCard({ Ticket, closeTicket, setCloseTicket }) {
     console.log("Ticket", Ticket)
     const history = useHistory()
     const handleCloseTicket = (event) => {
@@ -12,21 +12,11 @@ export default function GuestTicketCard({ Ticket }) {
             event.preventDefault()
             CloseTicket(Ticket.id)
                 .then(() =>
-                    DeactivateTicket(Ticket.id).then(() =>
-                        history.push("/myTickets")
+                    DeactivateTicket(Ticket.id).then(() => {
+                        setCloseTicket(!closeTicket)
+                        history.push("/Tickets")
+                    }
                     )
-                )
-        } else {
-            history.push("/")
-        }
-
-    }
-    const handleIssueTicket = (event) => {
-
-        if (window.confirm("Are you sure you want to upgrade this ticket to Issue Status?")) {
-            event.preventDefault()
-            IssueTicket(Ticket.id)
-                .then(() => history.push("/myTickets")
                 )
         } else {
             history.push("/")
@@ -39,8 +29,10 @@ export default function GuestTicketCard({ Ticket }) {
         event.preventDefault()
         OpenTicket(Ticket.id)
             .then(() =>
-                ActivateTicket(Ticket.id).then(() =>
-                    history.push("/myTickets")
+                ActivateTicket(Ticket.id).then(() => {
+                    // setCloseTicket(!closeTicket)
+                    history.push("/Tickets")
+                }
                 )
             )
 
@@ -70,12 +62,12 @@ export default function GuestTicketCard({ Ticket }) {
                         </div>
                         <div className="displayFlex row">
                             <div className="displayFlex col alignCenter">
-                                <button className="col claimed">Details</button>
+                                {/* <button className="col claimed" >Details</button> */}
                                 {Ticket.ticketStatus.name !== "Closed" &&
-                                    <button onClick={handleCloseTicket} title="Close Ticket" className="col closed">CLOSE</button>
+                                    <button onClick={handleCloseTicket} title="Close Ticket" className="col issue">Close Ticket</button>
                                 }
                                 {Ticket.ticketStatus.name === "Closed" &&
-                                    <button onClick={handleOpenTicket} title="Open Ticket" className="col open">REOPEN</button>
+                                    <button onClick={handleOpenTicket} title="Open Ticket" className="col open">Wake Up!</button>
                                 }
                             </div>
                         </div>

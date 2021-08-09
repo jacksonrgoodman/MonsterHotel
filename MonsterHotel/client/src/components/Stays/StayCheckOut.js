@@ -64,12 +64,15 @@ const StayForm = () => {
     return (
 
         <Card className="m-4">
-
-            <CardBody>
-                <div className='save-button'>
-                    <button className='btn open' type='button' disabled={isLoading} variant='primary' onClick={handleClickSaveEntry}>CHECK OUT</button>
+            <CardBody className="container">
+                <div className='horizon-center'>
+                    <h1>Thank You!</h1>
+                </div>
+                <div className='center'>
+                    <button className='waiting ' type='button' disabled={isLoading} variant='primary' onClick={handleClickSaveEntry}>CHECK OUT</button>
                 </div>
             </CardBody>
+            <img className="miniLogoGhost" src="../../img/ghostie.png" />
         </Card>
 
 

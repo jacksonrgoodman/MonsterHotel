@@ -3,7 +3,9 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import LandingProfilePage from "./UserProfile/LandingProfilePage";
+import HomePage from "./HomePage";
 import About from "./About";
+import WeeklyEvents from "./WeeklyEvents";
 import MyStays from "./Stays/MyStays";
 import StayForm from "./Stays/StayForm";
 import StayCheckOut from "./Stays/StayCheckOut";
@@ -13,6 +15,7 @@ import DeactivatedTickets from "./Tickets/DeactivatedTickets";
 import IssueTickets from "./Tickets/IssueTickets";
 import TicketForm from "./Tickets/TicketForm";
 import MyTicketsGuestView from "./Tickets/MyTicketsGuestView";
+import GuestDeactivatedTickets from "./Tickets/GuestDeactivatedTickets";
 import TicketEdit from "./Tickets/TicketEdit";
 import GuestList from "./UserProfile/GuestList";
 import { getCurrentProfile } from '../modules/userProfileManager';
@@ -124,6 +127,13 @@ export default function ApplicationViews({ isLoggedIn }) {
                         <Redirect to="/about" />
                     }
                 </Route>
+                <Route path="/Tickets/Old" exact>
+                    {isLoggedIn && !isAdmin ?
+                        <GuestDeactivatedTickets />
+                        :
+                        <Redirect to="/about" />
+                    }
+                </Route>
                 <Route path="/Tickets/edit/:id" >
                     {isLoggedIn && isAdmin ?
                         <TicketForm />
@@ -173,6 +183,12 @@ export default function ApplicationViews({ isLoggedIn }) {
                     }
                 </Route>
 
+                <Route path="/WeeklyEvents">
+                    <WeeklyEvents />
+                </Route>
+                <Route path="/HomePage">
+                    <HomePage />
+                </Route>
                 <Route path="/about">
                     <About />
                 </Route>

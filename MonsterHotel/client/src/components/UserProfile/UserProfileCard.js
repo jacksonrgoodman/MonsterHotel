@@ -28,10 +28,9 @@ export default function UserProfileCard({ UserProfile }) {
 
         console.log(UserProfile)
         userIsCheckedIn();
-
+        getStay()
 
     })
-    console.log(activeStay)
     return (
         <Card className="m-4">
             <img className="profilePicture" src={UserProfile.imageLocation} />
@@ -41,6 +40,7 @@ export default function UserProfileCard({ UserProfile }) {
                 {UserProfile.isCheckedIn &&
                     <>
                         <p><strong>Checked In!</strong></p>
+                        <button className="open">Ask For Help!</button>
                         {/* <p><strong>Room: </strong>{activeStay.room.floor}</p> */}
                     </>
                 }

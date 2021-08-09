@@ -28,7 +28,6 @@ function App() {
         <Header isLoggedIn={isLoggedIn} />
         <ApplicationViews isLoggedIn={isLoggedIn} />
       </HeaderProvider>
-
     </Router>
   );
 }

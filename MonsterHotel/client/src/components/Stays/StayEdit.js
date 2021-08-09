@@ -99,7 +99,7 @@ const EditStay = () => {
                 </div>
             </fieldset>
             <div className='save-button'>
-                <button className='btn' type='button' disabled={isLoading} variant='primary' onClick={handleClickSaveEntry}>Save Stay</button>
+                <button className='btn open' type='button' disabled={isLoading} variant='primary' onClick={handleClickSaveEntry}>Save Stay</button>
             </div>
         </>
     )

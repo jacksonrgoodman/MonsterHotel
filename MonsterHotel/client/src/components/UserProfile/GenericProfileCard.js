@@ -12,9 +12,11 @@ export default function UserProfileCard({ UserProfile }) {
                 {UserProfile.isCheckedIn &&
                     <>
                         <p><strong>Checked In!</strong></p>
+
                     </>
                 }
             </CardBody>
+            <img className="miniLogoGhost" src="../../img/ghostie.png" />
         </Card>
     );
 }

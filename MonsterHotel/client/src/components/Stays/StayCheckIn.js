@@ -4,6 +4,7 @@ import { getStayById, CheckIn, getAllStaysDeactive } from '../../modules/stayMan
 import { useHistory, useLocation } from 'react-router-dom';
 import { CheckInUser, getCurrentProfile } from '../../modules/userProfileManager';
 import StayCardGuestView from "./StayCardGuestView";
+import { Card, CardBody } from "reactstrap";
 
 const StayForm = (props) => {
     // const placeholderDate = new DateTime.Now()
@@ -46,15 +47,19 @@ const StayForm = (props) => {
     }, [])
 
     return (
-        <>
-            {stayList.map(q =>
-                <StayCardGuestView key={q.id} setStayCheckIn={location.state} Stay={q} />
-            )
-            }
+        <Card>
+            <CardBody>
+                <h1>Check In!</h1>
+                {stayList.map(q =>
+                    <StayCardGuestView key={q.id} setStayCheckIn={location.state} Stay={q} />
+                )
+                }
 
 
 
-        </>
+            </CardBody>
+            <img className="cornerLogoGhost" src="../../img/ghostie.png" />
+        </Card>
     )
 
 };

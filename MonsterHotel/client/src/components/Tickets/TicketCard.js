@@ -44,8 +44,10 @@ export default function UserProfileCard({ Ticket, closeTicket, setCloseTicket })
         event.preventDefault()
         OpenTicket(Ticket.id)
             .then(() =>
-                ActivateTicket(Ticket.id).then(() =>
+                ActivateTicket(Ticket.id).then(() => {
+                    setCloseTicket(!closeTicket)
                     history.push("/myTickets")
+                }
                 )
             )
 
@@ -151,7 +153,7 @@ export default function UserProfileCard({ Ticket, closeTicket, setCloseTicket })
                     </div>
                     <div className="displayFlex row">
                         <div className="displayFlex col alignCenter">
-                            <button className="col claimed">Details</button>
+                            {/* <button className="col claimed">Details</button> */}
                             {Ticket.ticketStatus.name !== "Closed" &&
                                 <button onClick={handleCloseTicket} title="Close Ticket" className="col closed">CLOSE</button>
                             }
